@@ -36,10 +36,10 @@ void j1Map::Draw()
 	MapLayer* layer = data.mapData.start->data;
 	TileSet* tileset = data.tilesets.start->data;
 
-	for (uint y = 0; y < layer->mapHeight; y++)
+	for (uint y = 0; y <= layer->mapHeight; y++)
 	{
 		
-		for (uint x = 0; x < layer->mapWidth; x++)
+		for (uint x = 0; x <= layer->mapWidth; x++)
 		{
 
 			uint tile_id = layer->Get(x, y);
