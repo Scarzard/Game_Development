@@ -20,22 +20,18 @@ struct MapLayer
 		if (data != nullptr) { delete data; }
 	}
 
+	//Short function to get the value of x,y
 	inline uint Get(int x, int y) const
 	{
 		return x + (y * mapWidth);
 	}
 
 };
-	// TODO 6: Short function to get the value of x,y
-
-	
-
-
 
 // ----------------------------------------------------
 struct TileSet
 {
-	// TODO 7: Create a method that receives a tile id and returns it's Rectfind the Rect associated with a specific tile id
+	//Create a method that receives a tile id and returns it's Rectfind the Rect associated with a specific tile id
 	SDL_Rect GetTileRect(int id) const;
 
 	p2SString			name;
@@ -70,7 +66,7 @@ struct MapData
 	SDL_Color			background_color;
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
-	// TODO 2: Add a list/array of layers to the map!
+	// Add a list/array of layers to the map!
 	p2List<MapLayer*>	mapData;
 };
 
@@ -105,8 +101,9 @@ private:
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	// TODO 3: Create a method that loads a single layer
-	
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
+	//loads colliders from xml and adds them to the map as SDL Rect
+	bool LoadMapCollisions(pugi::xml_node& node);
 
 public:
 

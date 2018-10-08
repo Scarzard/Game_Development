@@ -94,6 +94,8 @@ void j1Collision::DebugDraw()
 		{
 		case COLLIDER_NONE: // white
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
+		case COLLIDER_WALL: // white
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 		}
 	}
 }

@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Map.h"
+#include "j1Collision.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -56,10 +57,6 @@ void j1Map::Draw()
 			}
 		}
 	}
-	
-	
-
-		// TODO 9: Complete the draw function
 
 }
 
@@ -161,7 +158,7 @@ bool j1Map::Load(const char* file_name)
 		data.tilesets.add(set);
 	}
 
-	// TODO 4: Iterate all layers and load each of them
+	//Iterate all layers and load each of them
 	// Load layer info ----------------------------------------------
 
 	pugi::xml_node layer_node;
@@ -195,9 +192,6 @@ bool j1Map::Load(const char* file_name)
 			LOG("spacing: %d margin: %d", s->spacing, s->margin);
 			item = item->next;
 		}
-
-		// TODO 4: Add info here about your loaded layers
-		// Adapt this vcode with your own variables
 		
 		p2List_item<MapLayer*>* item_layer = data.mapData.start;
 		while(item_layer != NULL)
@@ -342,7 +336,6 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 	return ret;
 }
 
-// TODO 3: Create the definition for a function that loads a single layer
 
 bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 {
@@ -367,3 +360,28 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	return ret;
 }
 
+bool j1Map::LoadMapCollisions(pugi::xml_node &node)
+{
+	bool ret = true;
+
+	pugi::xml_node colliderObj = node.child("object");
+
+	if (colliderObj == NULL)
+	{
+		LOG("Error while parsing object node");
+		ret = false;
+	}
+
+
+	for (colliderObj = node.child("object"); colliderObj; colliderObj = colliderObj.next_sibling("object"))
+	{
+		SDL_Rect rect = { colliderObj.attribute("x").as_int(), colliderObj.attribute("y").as_int(),
+						  colliderObj.attribute("width").as_int(), colliderObj.attribute("height").as_int()
+						};
+		App->collision->AddCollider(rect, COLLIDER_WALL);
+	}
+
+	
+
+	return ret;
+}
