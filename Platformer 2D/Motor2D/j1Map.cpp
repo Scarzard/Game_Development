@@ -378,7 +378,13 @@ bool j1Map::LoadMapCollisions(pugi::xml_node &node)
 		SDL_Rect rect = { colliderObj.attribute("x").as_int(), colliderObj.attribute("y").as_int(),
 						  colliderObj.attribute("width").as_int(), colliderObj.attribute("height").as_int()
 						};
-		App->collision->AddCollider(rect, COLLIDER_WALL);
+		/*SDL_Rect rect;
+		rect.x = colliderObj.attribute("x").as_int();
+		rect.y = colliderObj.attribute("y").as_int();
+		rect.w = colliderObj.attribute("width").as_int();
+		rect.h = colliderObj.attribute("height").as_int();*/
+
+		App->collision->AddCollider(rect, COLLIDER_SOLID_FLOOR);
 	}
 
 	

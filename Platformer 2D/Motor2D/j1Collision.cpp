@@ -70,7 +70,11 @@ bool j1Collision::Update(float dt)
 		}
 	}
 
+	return true;
+}
 
+bool j1Collision::PostUpdate(float dt)
+{
 	DebugDraw();
 
 	return true;
@@ -94,8 +98,10 @@ void j1Collision::DebugDraw()
 		{
 		case COLLIDER_NONE: // white
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
-		case COLLIDER_WALL: // white
+		case COLLIDER_SOLID_FLOOR: // blue
 			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
+		case COLLIDER_PLAYER: // green
+			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
 		}
 	}
 }
@@ -136,7 +142,7 @@ bool j1Collision::EraseCollider(Collider* collider)
 {
 	if (collider != nullptr)
 	{
-		// we still search for it in case we received a dangling pointer
+		
 		for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		{
 			if (colliders[i] == collider)
@@ -162,6 +168,5 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 
 bool Collider::Update()
 {
-
 	return true;
 }

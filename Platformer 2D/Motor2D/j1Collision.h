@@ -9,7 +9,8 @@
 enum COLLIDER_TYPE
 {
 	COLLIDER_NONE = -1,
-	COLLIDER_WALL,
+	COLLIDER_SOLID_FLOOR,
+	COLLIDER_PLAYER,
 	
 
 	COLLIDER_MAX
@@ -48,6 +49,7 @@ public:
 
 	bool PreUpdate();
 	bool Update(float dt);
+	bool PostUpdate(float dt);
 	bool CleanUp();
 
 	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback = nullptr);

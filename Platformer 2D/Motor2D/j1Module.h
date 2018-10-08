@@ -10,7 +10,7 @@
 #include "PugiXml\src\pugixml.hpp"
 
 class j1App;
-struct Collider;
+class Collider;
 
 class j1Module
 {
@@ -71,7 +71,7 @@ public:
 	}
 
 	// Callbacks
-	virtual void OnCollision(Collider*, Collider*) {}
+	virtual void OnCollision(Collider* c1, Collider* c2) {}
 
 public:
 
