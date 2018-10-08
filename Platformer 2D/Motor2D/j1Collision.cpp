@@ -70,11 +70,6 @@ bool j1Collision::Update(float dt)
 		}
 	}
 
-	return true;
-}
-
-bool j1Collision::PostUpdate(float dt)
-{
 	DebugDraw();
 
 	return true;
@@ -83,7 +78,12 @@ bool j1Collision::PostUpdate(float dt)
 void j1Collision::DebugDraw()
 {
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+	{
+		LOG("clicking f9");
 		debug = !debug;
+		LOG("debug swap");
+	}
+		
 
 	if (debug == false)
 		return;

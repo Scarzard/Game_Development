@@ -176,6 +176,13 @@ bool j1Map::Load(const char* file_name)
 
 	}
 
+	pugi::xml_node col;
+
+	for (col = map_file.child("map").child("objectgroup"); col && ret; col = col.next_sibling("objectgroup"))
+	{
+		LoadMapCollisions(col);
+	}
+
 	if(ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
@@ -375,19 +382,16 @@ bool j1Map::LoadMapCollisions(pugi::xml_node &node)
 
 	for (colliderObj = node.child("object"); colliderObj; colliderObj = colliderObj.next_sibling("object"))
 	{
-		SDL_Rect rect = { colliderObj.attribute("x").as_int(), colliderObj.attribute("y").as_int(),
+
+		SDL_Rect boundingbox = { colliderObj.attribute("x").as_int(), colliderObj.attribute("y").as_int(),
 						  colliderObj.attribute("width").as_int(), colliderObj.attribute("height").as_int()
-						};
-		/*SDL_Rect rect;
-		rect.x = colliderObj.attribute("x").as_int();
-		rect.y = colliderObj.attribute("y").as_int();
-		rect.w = colliderObj.attribute("width").as_int();
-		rect.h = colliderObj.attribute("height").as_int();*/
 
-		App->collision->AddCollider(rect, COLLIDER_SOLID_FLOOR);
+								};
+
+
+		App->collision->AddCollider(boundingbox, COLLIDER_SOLID_FLOOR);
+		LOG("Created BB with dimensions %d %d %d %d", boundingbox.x, boundingbox.y, boundingbox.w, boundingbox.h);
 	}
-
-	
 
 	return ret;
 }

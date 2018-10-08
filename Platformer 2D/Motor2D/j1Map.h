@@ -68,6 +68,7 @@ struct MapData
 	p2List<TileSet*>	tilesets;
 	// Add a list/array of layers to the map!
 	p2List<MapLayer*>	mapData;
+	p2List<Collider*>	colliderList;
 };
 
 // ----------------------------------------------------
