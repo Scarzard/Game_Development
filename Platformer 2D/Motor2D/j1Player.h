@@ -8,25 +8,24 @@
 
 class Player
 {
-	Player();
+public:
+
+	Player() {};
 	virtual ~Player() {};
 
-	p2Point<int> position = { 0,0 };
+	int position_x = 0;
+	int position_y = 0;
 	
 	bool	alive		=	false;
 	bool	jumping		=	false;
+	
+	Collider*		playerCollider		= nullptr;
+	SDL_Texture*	playerTexture		= nullptr;
 
-	Collider* playerCollider = nullptr;
+	SDL_Rect*		spriteSection		= nullptr;
 
-	void SetPosition(int x, int y)
-	{
-		position = { x, y };
-	};
+public:
 
-	void Move(int horizontalDisplacement = 0, int verticalDisplacement = 0)
-	{
-		position += {horizontalDisplacement, verticalDisplacement};
-	}
 
 };
 
@@ -47,6 +46,8 @@ public:
 
 	// Called each loop iteration
 	bool PreUpdate();
+	bool Update(float dt);
+
 
 	// Called before quitting
 	bool CleanUp();
