@@ -389,8 +389,8 @@ bool j1Map::LoadMapCollisions(pugi::xml_node &node)
 								};
 
 
-		App->collision->AddCollider(boundingbox, COLLIDER_SOLID_FLOOR);
-		LOG("Created BB with dimensions %d %d %d %d", boundingbox.x, boundingbox.y, boundingbox.w, boundingbox.h);
+		data.colliderList.add(App->collision->AddCollider(boundingbox, COLLIDER_SOLID_FLOOR));
+		LOG("Created BB with position %d %d and dimensions of %d %d", boundingbox.x, boundingbox.y, boundingbox.w, boundingbox.h);
 	}
 
 	return ret;

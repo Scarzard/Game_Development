@@ -9,9 +9,8 @@ j1Collision::j1Collision()
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;
 
-	/*matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
-	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
-	*/
+
+	
 
 }
 
@@ -69,6 +68,16 @@ bool j1Collision::Update(float dt)
 			}
 		}
 	}
+
+	
+
+	return true;
+}
+
+//A PostUpdate is needed because the maps blits during the update. So the DebugDraw() appeared behind the map
+
+bool j1Collision::PostUpdate()
+{
 
 	DebugDraw();
 
