@@ -9,7 +9,11 @@ j1Collision::j1Collision()
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;
 
+	matrix[COLLIDER_SOLID_FLOOR][COLLIDER_SOLID_FLOOR] = false;
+	matrix[COLLIDER_SOLID_FLOOR][COLLIDER_PLAYER] = true;
 
+	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER_PLAYER][COLLIDER_SOLID_FLOOR] = true;
 	
 
 }
