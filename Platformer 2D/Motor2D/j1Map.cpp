@@ -6,7 +6,7 @@
 #include "j1Map.h"
 #include "j1Collision.h"
 #include <math.h>
-
+#include <string>
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
 	name.create("map");
@@ -180,7 +180,11 @@ bool j1Map::Load(const char* file_name)
 
 	for (col = map_file.child("map").child("objectgroup"); col && ret; col = col.next_sibling("objectgroup"))
 	{
-		LoadMapCollisions(col);
+		std::string tmp = col.child("properties").child("property").attribute("value").as_string();
+		if (tmp == "Collision")
+			LoadMapCollisions(col);
+		else if (tmp == "player1")
+			;
 	}
 
 	if(ret == true)

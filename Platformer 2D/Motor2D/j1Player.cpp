@@ -16,6 +16,17 @@ j1Player::~j1Player()
 
 bool j1Player::Awake(pugi::xml_node &)
 {
+	player1 = new Player();
+
+	// Create all animations (HARDCODED!!!!! NEED TO CHANGE LOADING TO TMX READING)
+
+	player1->idle.PushBack({ 86,6,34,42 });
+	player1->idle.PushBack({ 126,6,34,42 });
+	player1->idle.PushBack({ 166,6,34,42 });
+	player1->idle.PushBack({ 206,6,34,42 });
+	player1->idle.PushBack({ 256,6,34,42 });
+	player1->idle.speed = 0.03f;
+	player1->idle.loop = true;
 
 
 	return true;
@@ -23,10 +34,9 @@ bool j1Player::Awake(pugi::xml_node &)
 
 bool j1Player::Start()
 {
-	player1 = new Player;
 
-	player1->position_x = 50;
-	player1->position_y = 50;
+
+	player1->position = { 50,50 };
 
 	player1->playerTexture = App->tex->Load("textures/ashe.png");
 	return true;
@@ -39,7 +49,9 @@ bool j1Player::PreUpdate()
 
 bool j1Player::Update(float dt)
 {
-	App->render->Blit(player1->playerTexture, player1->position_x, player1->position_x, player1->spriteSection);
+	//player1->currentAnimation = &(player1->idle);
+	App->render->Blit(player1->playerTexture, player1->position.x, player1->position.x, &(player1->idle.GetCurrentFrame()));
+	//App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, player1->spriteSection);
 	return true;
 }
 

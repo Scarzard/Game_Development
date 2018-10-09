@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "p2List.h"
 #include "p2Point.h"
+#include "Animation.h"
 #include "SDL/include/SDL.h"
 
 class Player
@@ -13,8 +14,7 @@ public:
 	Player() {};
 	virtual ~Player() {};
 
-	int position_x = 0;
-	int position_y = 0;
+	p2Point<int> position = { 0,0 };
 	
 	bool	alive		=	false;
 	bool	jumping		=	false;
@@ -23,6 +23,12 @@ public:
 	SDL_Texture*	playerTexture		= nullptr;
 
 	SDL_Rect*		spriteSection		= nullptr;
+
+	Animation* currentAnimation = nullptr;
+
+	Animation idle;
+	Animation run;
+	Animation jump;
 
 public:
 
