@@ -14,11 +14,19 @@ j1Player::~j1Player()
 {
 }
 
-bool j1Player::Awake(pugi::xml_node &)
+bool j1Player::Awake(pugi::xml_node &config)
 {
 	player1 = new Player();
 
 	// Create all animations (HARDCODED!!!!! NEED TO CHANGE LOADING TO TMX READING)
+
+	player1->jumpStrength.x = config.child("jumpStrength").attribute("x").as_int();
+	player1->jumpStrength.y = config.child("jumpStrength").attribute("y").as_int();
+
+	player1->dashValue.x = config.child("dashValue").attribute("x").as_int();
+	player1->dashValue.y = config.child("dashValue").attribute("y").as_int();
+
+	player1->runningSpeed = config.child("runningSpeed").attribute("value").as_int();
 
 	player1->idle.PushBack({ 0,0,38,50 });
 	player1->idle.PushBack({ 38,0,38,50 });
@@ -27,14 +35,13 @@ bool j1Player::Awake(pugi::xml_node &)
 	player1->idle.loop = true;
 
 
+
+
 	return true;
 }
 
 bool j1Player::Start()
 {
-
-
-	player1->position = { 50,50 };
 
 	player1->playerTexture = App->tex->Load("textures/main_character.png");
 	return true;

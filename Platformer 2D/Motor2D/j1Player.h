@@ -26,6 +26,10 @@ public:
 
 	Animation* currentAnimation = nullptr;
 
+	int			runningSpeed;
+	iPoint		dashValue;
+	iPoint		jumpStrength;
+
 	Animation idle;
 	Animation run;
 	Animation jump;
@@ -62,7 +66,7 @@ private:
 
 public:
 
-	Player* player1 = nullptr;
+	Player* player1;
 	
 };
 
