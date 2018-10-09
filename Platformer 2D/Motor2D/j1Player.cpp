@@ -20,11 +20,9 @@ bool j1Player::Awake(pugi::xml_node &)
 
 	// Create all animations (HARDCODED!!!!! NEED TO CHANGE LOADING TO TMX READING)
 
-	player1->idle.PushBack({ 86,6,34,42 });
-	player1->idle.PushBack({ 126,6,34,42 });
-	player1->idle.PushBack({ 166,6,34,42 });
-	player1->idle.PushBack({ 206,6,34,42 });
-	player1->idle.PushBack({ 256,6,34,42 });
+	player1->idle.PushBack({ 0,0,38,50 });
+	player1->idle.PushBack({ 38,0,38,50 });
+	player1->idle.PushBack({ 76,0,38,50 });
 	player1->idle.speed = 0.03f;
 	player1->idle.loop = true;
 
@@ -38,7 +36,7 @@ bool j1Player::Start()
 
 	player1->position = { 50,50 };
 
-	player1->playerTexture = App->tex->Load("textures/ashe.png");
+	player1->playerTexture = App->tex->Load("textures/main_character.png");
 	return true;
 }
 
