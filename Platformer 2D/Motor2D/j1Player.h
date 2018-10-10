@@ -6,6 +6,7 @@
 #include "p2Point.h"
 #include "Animation.h"
 #include "SDL/include/SDL.h"
+#include "PugiXml/src/pugixml.hpp"
 
 class Player
 {
@@ -26,13 +27,13 @@ public:
 
 	Animation* currentAnimation = nullptr;
 
-	int			runningSpeed;
-	iPoint		dashValue;
-	iPoint		jumpStrength;
-
 	Animation idle;
 	Animation run;
 	Animation jump;
+
+	int			runningSpeed;
+	iPoint		dashValue;
+	iPoint		jumpStrength;
 
 public:
 
@@ -58,15 +59,21 @@ public:
 	bool PreUpdate();
 	bool Update(float dt);
 
-
 	// Called before quitting
 	bool CleanUp();
+
+	void LoadAnimations();
 
 private:
 
 public:
 
 	Player* player1;
+
+private:
+
+	pugi::xml_node		animFinder;
+	pugi::xml_document	storedAnims;
 	
 };
 
