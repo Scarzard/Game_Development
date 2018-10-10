@@ -144,12 +144,12 @@ bool j1Player::Update(float dt)
 }
 
 
-bool j1Player::PostUpdate(float dt)
-{
-	player1->position.x += player1->playerSpeed;
-
-	return true;
-}
+//bool j1Player::PostUpdate(float dt)
+//{
+//	player1->position.x += player1->playerSpeed;
+//
+//	return true;
+//}
 
 
 
@@ -232,6 +232,24 @@ void j1Player::LoadAnimations()
 			}
 
 		}
+
+	}
+}
+
+void j1Player::CheckCollision() 
+{
+
+}
+
+void j1Player::OnCollision(Collider* collider1, Collider* collider2)
+{
+	if (collider1->type == COLLIDER_PLAYER && collider2->type == COLLIDER_SOLID_FLOOR)
+	{
+
+	}
+
+	if (collider1->type == COLLIDER_PLAYER && collider2->type == COLLIDER_PHASABLE_FLOOR)
+	{
 
 	}
 }

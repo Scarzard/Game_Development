@@ -11,10 +11,16 @@ j1Collision::j1Collision()
 
 	matrix[COLLIDER_SOLID_FLOOR][COLLIDER_SOLID_FLOOR] = false;
 	matrix[COLLIDER_SOLID_FLOOR][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_SOLID_FLOOR][COLLIDER_PHASABLE_FLOOR] = false;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_SOLID_FLOOR] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_PHASABLE_FLOOR] = true;
 	
+	matrix[COLLIDER_PHASABLE_FLOOR][COLLIDER_PHASABLE_FLOOR] = false;
+	matrix[COLLIDER_PHASABLE_FLOOR][COLLIDER_SOLID_FLOOR] = false;
+	matrix[COLLIDER_PHASABLE_FLOOR][COLLIDER_PLAYER] = true;
+
 
 }
 
@@ -115,7 +121,10 @@ void j1Collision::DebugDraw()
 			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 		case COLLIDER_PLAYER: // green
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
+		case COLLIDER_PHASABLE_FLOOR: //light blue
+			App->render->DrawQuad(colliders[i]->rect, 125, 255, 255, alpha);
 		}
+
 	}
 }
 

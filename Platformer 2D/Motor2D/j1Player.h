@@ -8,6 +8,8 @@
 #include "SDL/include/SDL.h"
 #include "PugiXml/src/pugixml.hpp"
 
+class Collider;
+
 struct Player
 {
 	iPoint position{ 75,350 };
@@ -15,7 +17,6 @@ struct Player
 	int playerSpeed = 3;
 	int jumpStrength = 10;
 	int gravity = 8;
-
 
 	bool	alive;
 	bool	jumping = false;
@@ -56,12 +57,14 @@ public:
 	// Called each loop iteration
 	bool PreUpdate();
 	bool Update(float dt);
-	bool PostUpdate(float dt); //needead to update the player position that was changed in update(float dt);
+	//bool PostUpdate(float dt); //needead to update the player position that was changed in update(float dt);
 
 	// Called before quitting
 	bool CleanUp();
 
 	void LoadAnimations();
+	void OnCollision(Collider* collider1, Collider* collider2);
+	void CheckCollision();
 
 private:
 
