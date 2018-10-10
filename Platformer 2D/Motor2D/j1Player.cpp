@@ -22,21 +22,29 @@ bool j1Player::Awake(pugi::xml_node &config)
 {
 	player1 = new Player;
 
-	player1->jumpStrength.x = config.child("jumpStrength").attribute("x").as_int();
-	player1->jumpStrength.x = config.child("jumpStrength").attribute("x").as_int();
-	player1->jumpStrength.y = config.child("jumpStrength").attribute("y").as_int();
+	//DOESNT SET THE VALUES FOR THE VARIABLES. NOW ITS HARDCODED. NEED A FIX
 
-	player1->dashValue.x = config.child("dashValue").attribute("x").as_int();
-	player1->dashValue.y = config.child("dashValue").attribute("y").as_int();
+	//player1->position.x = config.child("position").attribute("x").as_int();
+	//player1->position.y = config.child("position").attribute("y").as_int();
 
-	player1->runningSpeed = config.child("runningSpeed").attribute("value").as_int();
-	player1->gravity = config.child("gravity").attribute("value").as_int();
+	//player1->playerSpeed = config.child("playerSpeed").attribute("value").as_int();
+
+	/*player1->jumpStrength.x = config.child("jumpStrength").attribute("value").as_int();*/
+
+	//player1->dashValue.x = config.child("dashValue").attribute("x").as_int();
+	//player1->dashValue.y = config.child("dashValue").attribute("y").as_int();
+
+	//player1->runningSpeed = config.child("runningSpeed").attribute("value").as_int();
+	//player1->gravity = config.child("gravity").attribute("value").as_int();
+
+	player1->alive = true;
 
 	return true;
 }
 
 bool j1Player::Start()
 {
+	
 	player1->playerTexture = App->tex->Load("textures/main_character.png");
 
 	pugi::xml_parse_result result = storedAnims.load_file("textures/animations.tmx");
@@ -49,6 +57,7 @@ bool j1Player::Start()
 	}
 	
 	player1->playerHitbox = App->collision->AddCollider({ player1->position.x, player1->position.y, 7, 6 }, COLLIDER_PLAYER, this);
+	player1->currentAnimation = &player1->idle;
 
 	return true;
 }
@@ -58,33 +67,71 @@ bool j1Player::PreUpdate()
 	return true;
 }
 
+
 bool j1Player::Update(float dt)
 {
-	player1->currentAnimation = &player1->idle;
+	//player1->currentAnimation = &(player1->idle);
+	//App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, player1->spriteSection);
+
 
 	//Player controls
-	if (player1->alive)
-	{
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (player1->alive == true) {
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 		{
-			player1->position.x += player1->runningSpeed;
-			player1->currentAnimation = &player1->run;
-
-			player1->facingLeft = false;
+			player1->speed.x = player1->playerSpeed;
+			if (player1->currentAnimation == &player1->idle)
+			{
+				player1->currentAnimation = &player1->run;
+			}
 		}
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
 		{
-			player1->position.x += - player1->runningSpeed;
-			player1->currentAnimation = &player1->run;
-
-			player1->facingLeft = true;
+			player1->speed.x = 0;
+			if (player1->currentAnimation == &player1->run)
+			{
+				player1->currentAnimation = &player1->idle;
+			}
 		}
-		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 		{
-			player1->position.y = player1->jumpStrength.y;
-			player1->currentAnimation = &player1->jump;
+			player1->speed.x = -player1->playerSpeed;
+			if (player1->currentAnimation == &player1->idle)
+			{
+				player1->currentAnimation = &player1->run;
+			}
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
+		{
+			player1->speed.x = 0;
+			if (player1->currentAnimation == &player1->run)
+			{
+				player1->currentAnimation = &player1->idle;
+			}
+		}
+		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+		{
+			player1->speed.y = -player1->jumpStrength;
+			if (player1->currentAnimation == &player1->idle || player1->currentAnimation == &player1->run)
+			{
+				player1->currentAnimation = &player1->jump;
+			}
+
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_J) == KEY_UP)
+		{
+			player1->speed.y = player1->gravity;
+			if (player1->currentAnimation == &player1->jump)
+			{
+				player1->currentAnimation = &player1->idle;
+			}
 		}
 	}
+	player1->playerHitbox->SetPos(player1->position.x, player1->position.y);
+
+
+	App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame());
+	player1->position.x += player1->speed.x;
+	player1->position.y += player1->speed.y;
 
 	if (player1->facingLeft)
 		App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame());
@@ -93,7 +140,18 @@ bool j1Player::Update(float dt)
 		App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame(), 1.0F, true);
 
 	return true;
+
 }
+
+
+bool j1Player::PostUpdate(float dt)
+{
+	player1->position.x += player1->playerSpeed;
+
+	return true;
+}
+
+
 
 bool j1Player::CleanUp()
 {

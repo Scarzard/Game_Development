@@ -10,24 +10,24 @@
 
 struct Player
 {
+	iPoint position{ 75,350 };
+	iPoint speed = { 0,0 };
+	int playerSpeed = 3;
+	int jumpStrength = 10;
+	int gravity = 8;
 
-	p2Point<int> position = { 0,0 };
+
+	bool	alive;
+	bool	jumping = false;
 	
-	bool	alive		=	true;
-	bool	jumping		=	false;
+
 	bool	facingLeft	=	false;
 	
 	Collider*		playerCollider		= nullptr;
 	SDL_Texture*	playerTexture		= nullptr;
 
-	SDL_Rect*		spriteSection		= nullptr;
-
 	Animation* currentAnimation = nullptr;
 
-	int			runningSpeed;
-	int			gravity;
-	iPoint		dashValue;
-	iPoint		jumpStrength;
 
 	Animation idle;
 	Animation run;
@@ -56,6 +56,7 @@ public:
 	// Called each loop iteration
 	bool PreUpdate();
 	bool Update(float dt);
+	bool PostUpdate(float dt); //needead to update the player position that was changed in update(float dt);
 
 	// Called before quitting
 	bool CleanUp();
@@ -66,7 +67,7 @@ private:
 
 public:
 
-	Player* player1;
+	Player* player1 = nullptr;
 
 private:
 
