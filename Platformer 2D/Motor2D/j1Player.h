@@ -8,17 +8,14 @@
 #include "SDL/include/SDL.h"
 #include "PugiXml/src/pugixml.hpp"
 
-class Player
+struct Player
 {
-public:
-
-	Player() {};
-	virtual ~Player() {};
 
 	p2Point<int> position = { 0,0 };
 	
-	bool	alive		=	false;
+	bool	alive		=	true;
 	bool	jumping		=	false;
+	bool	facingLeft	=	false;
 	
 	Collider*		playerCollider		= nullptr;
 	SDL_Texture*	playerTexture		= nullptr;
@@ -27,17 +24,18 @@ public:
 
 	Animation* currentAnimation = nullptr;
 
+	int			runningSpeed;
+	int			gravity;
+	iPoint		dashValue;
+	iPoint		jumpStrength;
+
 	Animation idle;
 	Animation run;
 	Animation jump;
 
-	int			runningSpeed;
-	iPoint		dashValue;
-	iPoint		jumpStrength;
-
 public:
 
-
+	Collider* playerHitbox;
 };
 
 class j1Player : public j1Module

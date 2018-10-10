@@ -5,6 +5,8 @@
 #include "j1Textures.h"
 #include "p2Log.h"
 #include <string>
+#include "j1Input.h"
+#include "j1Collision.h"
 
 
 j1Player::j1Player()
@@ -18,8 +20,9 @@ j1Player::~j1Player()
 
 bool j1Player::Awake(pugi::xml_node &config)
 {
-	player1 = new Player();
+	player1 = new Player;
 
+	player1->jumpStrength.x = config.child("jumpStrength").attribute("x").as_int();
 	player1->jumpStrength.x = config.child("jumpStrength").attribute("x").as_int();
 	player1->jumpStrength.y = config.child("jumpStrength").attribute("y").as_int();
 
@@ -27,6 +30,7 @@ bool j1Player::Awake(pugi::xml_node &config)
 	player1->dashValue.y = config.child("dashValue").attribute("y").as_int();
 
 	player1->runningSpeed = config.child("runningSpeed").attribute("value").as_int();
+	player1->gravity = config.child("gravity").attribute("value").as_int();
 
 	return true;
 }
@@ -43,7 +47,8 @@ bool j1Player::Start()
 	{
 		LoadAnimations();
 	}
-
+	
+	player1->playerHitbox = App->collision->AddCollider({ player1->position.x, player1->position.y, 7, 6 }, COLLIDER_PLAYER, this);
 
 	return true;
 }
@@ -55,8 +60,38 @@ bool j1Player::PreUpdate()
 
 bool j1Player::Update(float dt)
 {
-	player1->currentAnimation = &player1->run;
-	App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame());
+	player1->currentAnimation = &player1->idle;
+
+	//Player controls
+	if (player1->alive)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			player1->position.x += player1->runningSpeed;
+			player1->currentAnimation = &player1->run;
+
+			player1->facingLeft = false;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+			player1->position.x += - player1->runningSpeed;
+			player1->currentAnimation = &player1->run;
+
+			player1->facingLeft = true;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
+		{
+			player1->position.y = player1->jumpStrength.y;
+			player1->currentAnimation = &player1->jump;
+		}
+	}
+
+	if (player1->facingLeft)
+		App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame());
+
+	else if (!player1->facingLeft)
+		App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame(), 1.0F, true);
+
 	return true;
 }
 
