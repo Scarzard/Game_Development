@@ -7,12 +7,8 @@
 #include "Animation.h"
 #include "SDL/include/SDL.h"
 
-class Player
+struct Player
 {
-public:
-
-	Player() {};
-	virtual ~Player() {};
 
 	p2Point<int> position = { 0,0 };
 	
@@ -27,6 +23,7 @@ public:
 	Animation* currentAnimation = nullptr;
 
 	int			runningSpeed;
+	int			gravity;
 	iPoint		dashValue;
 	iPoint		jumpStrength;
 
@@ -34,7 +31,8 @@ public:
 	Animation run;
 	Animation jump;
 
-public:
+	Collider* playerHitbox;
+
 
 
 };
@@ -66,7 +64,7 @@ private:
 
 public:
 
-	Player* player1;
+	Player player1;
 	
 };
 
