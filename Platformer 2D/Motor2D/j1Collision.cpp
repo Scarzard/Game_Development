@@ -117,6 +117,10 @@ void j1Collision::DebugDraw()
 		{
 		case COLLIDER_NONE: // white
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
+		case COLLIDER_DEATH: // red
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+		case COLLIDER_LEVELEND: // orange
+			App->render->DrawQuad(colliders[i]->rect, 255, 100, 100, alpha);
 		case COLLIDER_SOLID_FLOOR: // blue
 			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 		case COLLIDER_PLAYER: // green

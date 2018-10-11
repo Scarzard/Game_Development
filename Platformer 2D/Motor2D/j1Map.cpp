@@ -392,9 +392,27 @@ bool j1Map::LoadMapCollisions(pugi::xml_node &node)
 
 								};
 
+		std::string comparer = colliderObj.child("properties").child("property").attribute("value").as_string();
 
-		data.colliderList.add(App->collision->AddCollider(boundingbox, COLLIDER_SOLID_FLOOR));
-		LOG("Created BB with position %d %d and dimensions of %d %d", boundingbox.x, boundingbox.y, boundingbox.w, boundingbox.h);
+		// Load walls
+		if (comparer == "wall")
+		{
+			data.colliderList.add(App->collision->AddCollider(boundingbox, COLLIDER_SOLID_FLOOR));
+			LOG("Created wall collider with position %d %d and dimensions of %d %d", boundingbox.x, boundingbox.y, boundingbox.w, boundingbox.h);
+		}
+
+		if (comparer == "death")
+		{
+
+			data.colliderList.add(App->collision->AddCollider(boundingbox, COLLIDER_DEATH));
+			LOG("Created death collider with position %d %d and dimensions of %d %d", boundingbox.x, boundingbox.y, boundingbox.w, boundingbox.h);
+		}
+
+		if (comparer == "levelEnd")
+		{
+			data.colliderList.add(App->collision->AddCollider(boundingbox, COLLIDER_LEVELEND));
+			LOG("Created level end collider with position %d %d and dimensions of %d %d", boundingbox.x, boundingbox.y, boundingbox.w, boundingbox.h);
+		}
 	}
 
 	return ret;

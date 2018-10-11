@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="200" height="75" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="134">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="200" height="75" tilewidth="16" tileheight="16" infinite="0" nextobjectid="225">
  <tileset firstgid="1" name="Warp" tilewidth="16" tileheight="16" tilecount="408" columns="24">
   <image source="tilesets.png" width="384" height="284"/>
  </tileset>
- <layer id="1" name="Scenery" width="200" height="75" offsetx="26.5" offsety="17.75">
+ <layer name="Scenery" width="200" height="75" offsetx="26.5" offsety="17.75">
   <data>
    <tile gid="232"/>
    <tile gid="232"/>
@@ -15007,67 +15007,569 @@
    <tile/>
   </data>
  </layer>
- <objectgroup id="4" name="Collision" offsetx="26.5" offsety="17.75">
+ <imagelayer name="Capa de Imagen 2" offsetx="26" offsety="16"/>
+ <imagelayer name="Capa de Imagen 1" visible="0" offsetx="26" offsety="18">
+  <image source="middleground.png" width="272" height="176"/>
+ </imagelayer>
+ <objectgroup name="Collision" offsetx="26.5" offsety="17.75">
   <properties>
    <property name="Name" value="Collision"/>
   </properties>
-  <object id="65" x="0" y="448" width="176" height="656"/>
-  <object id="66" x="80" y="432" width="80" height="16"/>
-  <object id="67" x="208" y="400" width="48" height="16"/>
-  <object id="68" x="288" y="384" width="48" height="16"/>
-  <object id="70" x="368" y="368" width="48" height="16"/>
-  <object id="71" x="448" y="480" width="112" height="608"/>
-  <object id="72" x="560" y="464" width="64" height="32"/>
+  <object id="65" x="0" y="448" width="176" height="656">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="66" x="80" y="432" width="80" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="67" x="208" y="400" width="48" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="68" x="288" y="384" width="48" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="70" x="368" y="368" width="48" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="71" x="448" y="480" width="112" height="608">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="72" x="560" y="464" width="64" height="32">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
   <object id="74" x="624" y="432" width="80" height="48">
    <properties>
     <property name="Collision" type="bool" value="true"/>
+    <property name="type" value="wall"/>
    </properties>
   </object>
-  <object id="76" x="704" y="400" width="80" height="688"/>
-  <object id="77" x="736" y="304" width="32" height="96"/>
-  <object id="78" x="608" y="352" width="80" height="16"/>
-  <object id="79" x="784" y="560" width="64" height="16"/>
-  <object id="80" x="912" y="592" width="96" height="480"/>
-  <object id="81" x="1088" y="496" width="80" height="560"/>
-  <object id="82" x="1040" y="544" width="48" height="16"/>
-  <object id="86" x="1168" y="480" width="80" height="32"/>
-  <object id="87" x="1248" y="448" width="80" height="48"/>
-  <object id="88" x="1328" y="416" width="48" height="640"/>
-  <object id="89" x="1232" y="368" width="80" height="16"/>
-  <object id="90" x="1152" y="336" width="64" height="64"/>
-  <object id="91" x="1120" y="160" width="32" height="192"/>
-  <object id="92" x="1136" y="144" width="48" height="16"/>
-  <object id="93" x="1216" y="288" width="32" height="16"/>
-  <object id="94" x="1248" y="240" width="32" height="16"/>
-  <object id="95" x="1296" y="320" width="32" height="16"/>
-  <object id="96" x="1328" y="224" width="32" height="16"/>
-  <object id="98" x="1360" y="160" width="32" height="16"/>
-  <object id="99" x="1472" y="144" width="32" height="16"/>
-  <object id="100" x="1408" y="208" width="32" height="16"/>
-  <object id="102" x="1360" y="272" width="32" height="16"/>
-  <object id="103" x="1376" y="352" width="32" height="16"/>
-  <object id="104" x="1472" y="272" width="32" height="16"/>
-  <object id="105" x="1504" y="208" width="32" height="16"/>
-  <object id="106" x="1568" y="256" width="32" height="16"/>
-  <object id="108" x="1648" y="112" width="64" height="496"/>
-  <object id="109" x="1584" y="736" width="80" height="16"/>
-  <object id="110" x="1728" y="720" width="48" height="16"/>
-  <object id="111" x="1744" y="672" width="32" height="16"/>
-  <object id="112" x="1776" y="624" width="112" height="432"/>
-  <object id="113" x="1888" y="608" width="32" height="32"/>
-  <object id="114" x="1920" y="592" width="32" height="32"/>
-  <object id="115" x="1952" y="576" width="32" height="32"/>
-  <object id="118" x="1984" y="560" width="32" height="32"/>
-  <object id="120" x="2016" y="544" width="32" height="32"/>
-  <object id="121" x="2048" y="416" width="16" height="160"/>
-  <object id="124" x="1936" y="336" width="144" height="80"/>
-  <object id="126" x="2080" y="320" width="128" height="32"/>
-  <object id="127" x="1856" y="448" width="16" height="16"/>
-  <object id="128" x="1808" y="432" width="48" height="48"/>
-  <object id="129" x="1808" y="240" width="16" height="192"/>
-  <object id="130" x="864" y="144" width="16" height="96"/>
-  <object id="131" x="880" y="240" width="16" height="16"/>
-  <object id="132" x="896" y="256" width="16" height="64"/>
-  <object id="133" x="880" y="320" width="80" height="144"/>
+  <object id="76" x="704" y="400" width="80" height="688">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="77" x="736" y="304" width="32" height="96">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="78" x="608" y="352" width="80" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="79" x="784" y="560" width="64" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="80" x="912" y="592" width="96" height="480">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="81" x="1088" y="496" width="80" height="560">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="82" x="1040" y="544" width="48" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="86" x="1168" y="480" width="80" height="80">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="87" x="1248" y="448" width="80" height="80">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="88" x="1328" y="416" width="48" height="640">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="89" x="1232" y="368" width="80" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="90" x="1152" y="336" width="64" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="91" x="1120" y="160" width="32" height="192">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="92" x="1136" y="96" width="48" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="93" x="1216" y="288" width="32" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="94" x="1248" y="240" width="32" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="95" x="1296" y="320" width="32" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="96" x="1328" y="224" width="32" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="98" x="1360" y="160" width="32" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="99" x="1472" y="144" width="32" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="100" x="1408" y="208" width="32" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="102" x="1360" y="272" width="32" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="103" x="1376" y="352" width="32" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="104" x="1472" y="272" width="32" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="105" x="1504" y="208" width="32" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="106" x="1568" y="256" width="32" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="108" x="1648" y="112" width="64" height="496">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="109" x="1584" y="736" width="80" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="110" x="1728" y="720" width="48" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="111" x="1744" y="672" width="32" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="112" x="1776" y="624" width="112" height="432">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="113" x="1888" y="608" width="32" height="80">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="114" x="1920" y="592" width="32" height="80">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="115" x="1952" y="576" width="32" height="80">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="118" x="1984" y="560" width="32" height="80">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="120" x="2016" y="544" width="32" height="80">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="121" x="2048" y="416" width="64" height="160">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="124" x="1936" y="336" width="144" height="80">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="126" x="2080" y="320" width="128" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="127" x="1856" y="448" width="16" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="128" x="1808" y="432" width="48" height="48">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="129" x="1760" y="240" width="64" height="192">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="130" x="864" y="64" width="64" height="176">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="131" x="880" y="240" width="64" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="132" x="896" y="256" width="64" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="133" x="880" y="320" width="80" height="144">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="134" x="176" y="720" width="272" height="112">
+   <properties>
+    <property name="type" value="death"/>
+   </properties>
+  </object>
+  <object id="143" x="960" y="336" width="16" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="144" x="976" y="320" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="146" x="1008" y="304" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="148" x="1040" y="288" width="48" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="149" x="1120" y="352" width="32" height="32">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="150" x="1088" y="304" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="153" x="784" y="720" width="128" height="112">
+   <properties>
+    <property name="type" value="death"/>
+   </properties>
+  </object>
+  <object id="155" x="1008" y="720" width="80" height="112">
+   <properties>
+    <property name="type" value="death"/>
+   </properties>
+  </object>
+  <object id="157" x="1888" y="384" width="48" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="158" x="1904" y="496" width="80" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="161" x="1824" y="192" width="48" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="164" x="1872" y="176" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="167" x="1904" y="160" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="168" x="1936" y="144" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="169" x="1968" y="128" width="48" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="170" x="2016" y="144" width="64" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="171" x="2080" y="160" width="48" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="172" x="2128" y="176" width="48" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="175" x="2144" y="240" width="48" height="80">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="179" x="1712" y="464" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="180" x="1744" y="448" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="181" x="1776" y="448" width="32" height="48">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="182" x="1808" y="480" width="32" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="183" x="0" y="176" width="16" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="185" x="16" y="192" width="48" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="187" x="64" y="208" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="188" x="96" y="224" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="189" x="128" y="208" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="190" x="160" y="192" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="191" x="192" y="176" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="192" x="224" y="160" width="48" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="193" x="272" y="176" width="48" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="194" x="320" y="192" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="195" x="352" y="176" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="196" x="384" y="160" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="197" x="416" y="144" width="64" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="198" x="480" y="128" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="199" x="512" y="112" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="201" x="544" y="96" width="48" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="202" x="592" y="112" width="48" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="203" x="640" y="128" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="204" x="672" y="112" width="64" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="206" x="736" y="96" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="207" x="768" y="80" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="208" x="800" y="64" width="64" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="209" x="1184" y="80" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="211" x="1216" y="64" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="213" x="1248" y="48" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="214" x="1280" y="32" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="215" x="1312" y="16" width="32" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="216" x="1344" y="0" width="176" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="219" x="1520" y="16" width="48" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="220" x="1568" y="32" width="48" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="221" x="1616" y="48" width="64" height="64">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="223" x="1376" y="848" width="400" height="80">
+   <properties>
+    <property name="type" value="death"/>
+   </properties>
+  </object>
+  <object id="224" x="2128" y="240" width="16" height="80">
+   <properties>
+    <property name="type" value="levelEnd"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

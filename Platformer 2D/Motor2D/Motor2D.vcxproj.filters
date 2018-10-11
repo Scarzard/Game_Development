@@ -127,5 +127,8 @@
     <None Include="..\Game\textures\animations.tmx">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </None>
+    <None Include="..\Game\maps\GameLevelXML.tmx">
+      <Filter>Desenvolupament  ========\Tools</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="50" height="15" tilewidth="50" tileheight="50" infinite="0" nextlayerid="6" nextobjectid="30">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="50" height="15" tilewidth="50" tileheight="50" infinite="0" nextobjectid="30">
  <tileset firstgid="1" source="../maps/main_character.tsx"/>
- <layer id="1" name="Spritesheet" width="50" height="15">
+ <layer name="Spritesheet" width="50" height="15">
   <data>
    <tile gid="1"/>
    <tile gid="2"/>
@@ -755,7 +755,7 @@
    <tile/>
   </data>
  </layer>
- <objectgroup id="5" name="Jump">
+ <objectgroup name="Jump">
   <properties>
    <property name="Name" value="jump"/>
    <property name="loop" type="bool" value="true"/>
@@ -773,7 +773,7 @@
   <object id="28" x="100" y="200" width="50" height="50"/>
   <object id="29" x="150" y="200" width="50" height="50"/>
  </objectgroup>
- <objectgroup id="3" name="Run">
+ <objectgroup name="Run">
   <properties>
    <property name="Name" value="run"/>
    <property name="loop" type="bool" value="true"/>
@@ -790,7 +790,7 @@
   <object id="16" x="150" y="100" width="50" height="50"/>
   <object id="17" x="200" y="100" width="50" height="50"/>
  </objectgroup>
- <objectgroup id="2" name="Idle">
+ <objectgroup name="Idle">
   <properties>
    <property name="Name" value="idle"/>
    <property name="loop" type="bool" value="true"/>

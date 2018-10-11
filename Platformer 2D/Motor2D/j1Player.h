@@ -18,8 +18,8 @@ struct Player
 	int jumpStrength = 10;
 	int gravity = 8;
 
-	bool	alive;
-	bool	jumping = false;
+	bool	alive	=	false;
+	bool	jumping =	false;
 	
 
 	bool	facingLeft	=	false;

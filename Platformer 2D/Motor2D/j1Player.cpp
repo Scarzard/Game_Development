@@ -11,6 +11,7 @@
 
 j1Player::j1Player()
 {
+	name.create("player");
 }
 
 
