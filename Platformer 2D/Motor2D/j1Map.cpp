@@ -198,6 +198,8 @@ bool j1Map::Load(const char* file_name)
 	//Iterate all layers and load each of them
 	// Load layer info ----------------------------------------------
 
+	ret = true;
+
 	pugi::xml_node layer_node;
 
 	for (layer_node = map_file.child("map").child("layer"); layer_node && ret; layer_node = layer_node.next_sibling("layer"))
