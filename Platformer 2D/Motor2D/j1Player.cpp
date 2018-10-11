@@ -239,13 +239,55 @@ void j1Player::ApplyGravity()
 
 void j1Player::OnCollision(Collider* collider1, Collider* collider2)
 {
-	if (collider1->type == COLLIDER_PLAYER && collider2->type == COLLIDER_SOLID_FLOOR)
+	if (collider1->type == COLLIDER_PLAYERFUTURE && collider1->type == COLLIDER_SOLID_FLOOR)
 	{
+		SDL_Rect intersectCol;
+		if (SDL_IntersectRect(&collider1->rect, &collider2->rect, &intersectCol));
+		//future player collider and a certain wall collider have collided
 
-	}
+		if (player1->speed.y > 0) //if falling down
+		{
+			if (player1->playerCollider->rect.y + player1->playerCollider->rect.h <= collider2->rect.y)//Checking player is above the collider
+			{
+				if (player1->speed.x == 0) //if not moving horizontally
+					player1->speed.y -= intersectCol.h;
 
-	if (collider1->type == COLLIDER_PLAYER && collider2->type == COLLIDER_PHASABLE_FLOOR)
-	{
+				else if (player1->speed.x < 0) //if moving left
+				{
+					if (intersectCol.h >= intersectCol.w)
+					{
+						if (collider1->rect.x <= collider2->rect.x + collider2->rect.w)
+							player1->speed.y -= intersectCol.h;
+						else
+							player1->speed.x += intersectCol.w;
+					}
+					else
+						player1->speed.y -= intersectCol.h;
+				}
 
+				else if (player1->speed.x > 0) //if moving right
+				{
+					if (intersectCol.h >= intersectCol.w)
+					{
+						if (collider1->rect.x + collider1->rect.w >= collider2->rect.x)
+							player1->speed.y -= intersectCol.h;
+						else
+							player1->speed.x -= intersectCol.w;
+					}
+					else
+						player1->speed.y -= intersectCol.h;
+
+				}
+			}
+
+			else //if player is not above the collider
+			{
+				if (player1->speed.x < 0) //if moving left
+					player1->speed.x += intersectCol.w;
+
+				else if (player1->speed.x > 0) //if moving right
+					player1->speed.x -= intersectCol.w;
+			}
+		}
 	}
 }
