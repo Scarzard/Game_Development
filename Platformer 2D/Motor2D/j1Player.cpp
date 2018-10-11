@@ -11,6 +11,7 @@
 
 j1Player::j1Player()
 {
+	name.create("player");
 }
 
 
@@ -22,22 +23,19 @@ bool j1Player::Awake(pugi::xml_node &config)
 {
 	player1 = new Player;
 
+	
 	//DOESNT SET THE VALUES FOR THE VARIABLES. NOW ITS HARDCODED. NEED A FIX
+	player1->alive = config.child("alive").attribute("value").as_bool();
 
-	//player1->position.x = config.child("position").attribute("x").as_int();
-	//player1->position.y = config.child("position").attribute("y").as_int();
+	player1->position.x = config.child("position").attribute("x").as_int();
+	player1->position.y = config.child("position").attribute("y").as_int();
 
-	//player1->playerSpeed = config.child("playerSpeed").attribute("value").as_int();
+	player1->playerSpeed = config.child("playerSpeed").attribute("value").as_int();
+	player1->jumpStrength = config.child("jumpStrength").attribute("value").as_int();
 
-	/*player1->jumpStrength.x = config.child("jumpStrength").attribute("value").as_int();*/
+	player1->gravity = config.child("gravity").attribute("value").as_int();
 
-	//player1->dashValue.x = config.child("dashValue").attribute("x").as_int();
-	//player1->dashValue.y = config.child("dashValue").attribute("y").as_int();
 
-	//player1->runningSpeed = config.child("runningSpeed").attribute("value").as_int();
-	//player1->gravity = config.child("gravity").attribute("value").as_int();
-
-	player1->alive = true;
 
 	return true;
 }

@@ -12,13 +12,13 @@ class Collider;
 
 struct Player
 {
-	iPoint position{ 75,350 };
+	iPoint position = { 0,0 };
 	iPoint speed = { 0,0 };
-	int playerSpeed = 3;
-	int jumpStrength = 10;
-	int gravity = 8;
+	int playerSpeed = 0;
+	int jumpStrength = 0;
+	int gravity = 0;
 
-	bool	alive;
+	bool	alive = false;
 	bool	jumping = false;
 	
 
@@ -49,7 +49,7 @@ public:
 	virtual ~j1Player();
 
 	// Called before render is available
-	bool Awake(pugi::xml_node&);
+	bool Awake(pugi::xml_node &config);
 
 	// Called before the first frame
 	bool Start();
