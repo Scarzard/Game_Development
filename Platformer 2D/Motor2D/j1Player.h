@@ -19,23 +19,23 @@ struct Player
 	int gravity = 0;
 	bool	alive	=	false;
 	bool	jumping =	false;
-	
 
 	bool	facingLeft	=	false;
 	
 	Collider*		playerCollider		= nullptr;
+	Collider*		playerNextFrameCol	= nullptr;
+
+	iPoint colliderOffset = { 0,0 };
+
 	SDL_Texture*	playerTexture		= nullptr;
 
 	Animation* currentAnimation = nullptr;
-
 
 	Animation idle;
 	Animation run;
 	Animation jump;
 
 public:
-
-	Collider* playerHitbox;
 };
 
 class j1Player : public j1Module
@@ -66,6 +66,11 @@ public:
 	void CheckCollision();
 
 private:
+
+	void HorizontalInput();
+	void VerticalInput();
+	void UpdateColliders();
+	void ApplyGravity();
 
 public:
 

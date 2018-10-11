@@ -54,7 +54,7 @@ bool j1Player::Start()
 		LoadAnimations();
 	}
 	
-	player1->playerHitbox = App->collision->AddCollider({ player1->position.x, player1->position.y, 7, 6 }, COLLIDER_PLAYER, this);
+	player1->playerCollider = App->collision->AddCollider({ player1->position.x, player1->position.y, 7, 6 }, COLLIDER_PLAYER, this);
 	player1->currentAnimation = &player1->idle;
 
 	return true;
@@ -68,68 +68,25 @@ bool j1Player::PreUpdate()
 
 bool j1Player::Update(float dt)
 {
-	//player1->currentAnimation = &(player1->idle);
-	//App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, player1->spriteSection);
-
-
 	//Player controls
 	if (player1->alive == true) {
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
-		{
-			player1->speed.x = player1->playerSpeed;
-			if (player1->currentAnimation == &player1->idle)
-			{
-				player1->currentAnimation = &player1->run;
-			}
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
-		{
-			player1->speed.x = 0;
-			if (player1->currentAnimation == &player1->run)
-			{
-				player1->currentAnimation = &player1->idle;
-			}
-		}
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
-		{
-			player1->speed.x = -player1->playerSpeed;
-			if (player1->currentAnimation == &player1->idle)
-			{
-				player1->currentAnimation = &player1->run;
-			}
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
-		{
-			player1->speed.x = 0;
-			if (player1->currentAnimation == &player1->run)
-			{
-				player1->currentAnimation = &player1->idle;
-			}
-		}
-		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
-		{
-			player1->speed.y = -player1->jumpStrength;
-			if (player1->currentAnimation == &player1->idle || player1->currentAnimation == &player1->run)
-			{
-				player1->currentAnimation = &player1->jump;
-			}
 
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_J) == KEY_UP)
-		{
-			player1->speed.y = player1->gravity;
-			if (player1->currentAnimation == &player1->jump)
-			{
-				player1->currentAnimation = &player1->idle;
-			}
-		}
+		player1->currentAnimation = &player1->idle;
+		player1->speed.x = 0;
+
+		HorizontalInput();
+		VerticalInput();
+		
 	}
-	player1->playerHitbox->SetPos(player1->position.x, player1->position.y);
 
+
+	ApplyGravity();
+
+	UpdateColliders();
 
 	App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame());
 	player1->position.x += player1->speed.x;
-	player1->position.y += player1->speed.y;
+	player1->position.y += player1->speed.y/2;
 
 	if (player1->facingLeft)
 		App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame());
@@ -237,6 +194,50 @@ void j1Player::LoadAnimations()
 void j1Player::CheckCollision() 
 {
 
+}
+
+void j1Player::HorizontalInput()
+{
+	// Check horizontal movement
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		player1->currentAnimation = &player1->idle;
+
+	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
+		player1->speed.x = player1->playerSpeed;
+		player1->currentAnimation = &player1->run;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+		player1->speed.x = -player1->playerSpeed;
+		player1->currentAnimation = &player1->run;
+	}
+}
+
+void j1Player::VerticalInput()
+{
+	// Check vertical movement
+	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+	{
+		player1->speed.y = -player1->jumpStrength;
+		/*player1->jump.Reset();*/
+		player1->jumping = true;
+	}
+
+	if (player1->jumping)
+		player1->currentAnimation = &player1->jump;
+}
+
+void j1Player::UpdateColliders()
+{
+	player1->playerCollider->SetPos(player1->position.x + player1->colliderOffset.x, player1->position.y + player1->colliderOffset.y);
+
+
+}
+
+void j1Player::ApplyGravity()
+{
+	player1->speed.y += player1->gravity;
 }
 
 void j1Player::OnCollision(Collider* collider1, Collider* collider2)

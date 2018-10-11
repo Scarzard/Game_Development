@@ -758,7 +758,7 @@
  <objectgroup name="Jump">
   <properties>
    <property name="Name" value="jump"/>
-   <property name="loop" type="bool" value="true"/>
+   <property name="loop" type="bool" value="false"/>
    <property name="speed" type="float" value="0.3"/>
   </properties>
   <object id="19" x="250" y="100" width="50" height="50"/>

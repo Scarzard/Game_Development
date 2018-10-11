@@ -131,4 +131,9 @@
       <Filter>Desenvolupament  ========\Tools</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Game\config.xml">
+      <Filter>Desenvolupament  ========\Tools</Filter>
+    </Xml>
+  </ItemGroup>
 </Project>

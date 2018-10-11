@@ -116,6 +116,9 @@
     <None Include="..\Game\maps\GameLevelXML.tmx" />
     <None Include="..\Game\textures\animations.tmx" />
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Game\config.xml" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
