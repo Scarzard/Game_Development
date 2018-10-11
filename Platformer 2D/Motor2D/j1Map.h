@@ -49,6 +49,20 @@ struct TileSet
 	int					offset_y;
 };
 
+struct ImageLayer
+{
+
+	p2SString		name;
+	SDL_Texture*	texture = nullptr;
+	int				offset_x;
+	int				offset_y;
+	int				width;
+	int				height;
+	fPoint			position;
+	float			speed = 0;
+
+};
+
 enum MapTypes
 {
 	MAPTYPE_UNKNOWN = 0,
@@ -69,6 +83,7 @@ struct MapData
 	// Add a list/array of layers to the map!
 	p2List<MapLayer*>	mapData;
 	p2List<Collider*>	colliderList;
+	p2List<ImageLayer*>	image;
 };
 
 // ----------------------------------------------------
@@ -102,6 +117,7 @@ private:
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
+	bool LoadImageLayer(pugi::xml_node& node, ImageLayer* set);
 	bool LoadMapCollisions(pugi::xml_node& node);
 
 public:

@@ -34,6 +34,18 @@ void j1Map::Draw()
 
 	// TODO 5: Prepare the loop to draw all tilesets + Blit
 
+	p2List_item<ImageLayer*>* image_list;
+	for (image_list = data.image.start; image_list; image_list = image_list->next)
+	{
+		SDL_Texture* tex = image_list->data->texture;
+		SDL_Rect rect = { 0,0,image_list->data->width, image_list->data->height };
+		if (image_list->data->position.x < -image_list->data->width)
+		{
+			image_list->data->position.x = image_list->data->width;
+		}
+		App->render->Blit(tex, image_list->data->position.x, image_list->data->position.y, &rect);
+	}
+
 	MapLayer* layer = data.mapData.start->data;
 	TileSet* tileset = data.tilesets.start->data;
 
@@ -98,7 +110,6 @@ bool j1Map::CleanUp()
 	}
 	data.tilesets.clear();
 
-	// TODO 2: clean up all layer data
 	// Remove all layers
 
 	p2List_item<MapLayer*>* layer_info;
@@ -111,6 +122,32 @@ bool j1Map::CleanUp()
 		layer_info = layer_info->next;
 	}
 	data.mapData.clear();
+
+	// Remove all images
+
+	p2List_item<ImageLayer*>* image_info;
+	image_info = data.image.start;
+
+
+	while (image_info != NULL)
+	{
+		RELEASE(image_info->data);
+		image_info = image_info->next;
+	}
+	data.image.clear();
+
+	// Remove all colliders
+
+	p2List_item<Collider*>* collider_info;
+	collider_info = data.colliderList.start;
+
+
+	while (collider_info != NULL)
+	{
+		RELEASE(collider_info->data);
+		collider_info = collider_info->next;
+	}
+	data.colliderList.clear();
 
 
 	// Clean up the pugui tree
@@ -311,41 +348,7 @@ bool j1Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 	return ret;
 }
 
-bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
-{
-	bool ret = true;
-	pugi::xml_node image = tileset_node.child("image");
 
-	if(image == NULL)
-	{
-		LOG("Error parsing tileset xml file: Cannot find 'image' tag.");
-		ret = false;
-	}
-	else
-	{
-		set->texture = App->tex->Load(PATH(folder.GetString(), image.attribute("source").as_string()));
-		int w, h;
-		SDL_QueryTexture(set->texture, NULL, NULL, &w, &h);
-		set->tex_width = image.attribute("width").as_int();
-
-		if(set->tex_width <= 0)
-		{
-			set->tex_width = w;
-		}
-
-		set->tex_height = image.attribute("height").as_int();
-
-		if(set->tex_height <= 0)
-		{
-			set->tex_height = h;
-		}
-
-		set->num_tiles_width = set->tex_width / set->tile_width;
-		set->num_tiles_height = set->tex_height / set->tile_height;
-	}
-
-	return ret;
-}
 
 
 bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
@@ -366,6 +369,35 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	for (pugi::xml_node node = map_file.child("map").child("layer").child("data").child("tile"); node; node = node.next_sibling("tile"))
 	{
 		layer->data[i++] = node.attribute("gid").as_uint(0);
+	}
+
+	return ret;
+}
+
+bool j1Map::LoadImageLayer(pugi::xml_node& node, ImageLayer* img)
+{
+	bool ret = true;
+
+	img->name = node.attribute("name").as_string();
+	img->offset_x = node.attribute("offsetx").as_int();
+	img->offset_y = node.attribute("offsety").as_int();
+
+	img->position.x = img->offset_x;
+	img->position.y = img->offset_y;
+
+	pugi::xml_node image = node.child("image");
+
+	if (image == NULL)
+	{
+		LOG("Error parsing map xml file: Cannot find 'imagelayer/image' tag.");
+		ret = false;
+		RELEASE(img);
+	}
+	else
+	{
+		img->texture = App->tex->Load(PATH(folder.GetString(), image.attribute("source").as_string()));
+		img->width = image.attribute("width").as_int();
+		img->height = image.attribute("height").as_int();
 	}
 
 	return ret;
