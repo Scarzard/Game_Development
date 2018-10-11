@@ -7,6 +7,7 @@
 #include <string>
 #include "j1Input.h"
 #include "j1Collision.h"
+#include <math.h>
 
 
 j1Player::j1Player()
@@ -82,15 +83,15 @@ bool j1Player::Update(float dt)
 
 	UpdateColliders();
 
-	App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame());
+	App->render->Blit(player1->playerTexture, (int)player1->position.x, (int)player1->position.y, &player1->currentAnimation->GetCurrentFrame());
 	player1->position.x += player1->speed.x;
 	player1->position.y += player1->speed.y;
 
-	if (player1->facingLeft)
+	/*if (player1->facingLeft)
 		App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame());
 
 	else if (!player1->facingLeft)
-		App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame(), 1.0F, true);
+		App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame(), 1.0F, true);*/
 
 	return true;
 
@@ -224,7 +225,7 @@ void j1Player::VerticalInput()
 void j1Player::UpdateColliders()
 {
 	player1->playerCollider->SetPos(player1->position.x + player1->colliderOffset.x, player1->position.y + player1->colliderOffset.y);
-	player1->playerNextFrameCol->SetPos(player1->playerCollider->rect.x + player1->speed.x, player1->playerCollider->rect.y + player1->speed.y);
+	player1->playerNextFrameCol->SetPos(player1->playerCollider->rect.x + (int)player1->speed.x, player1->playerCollider->rect.y + (int)player1->speed.y);
 }
 
 void j1Player::ApplyGravity()
@@ -234,56 +235,113 @@ void j1Player::ApplyGravity()
 
 void j1Player::OnCollision(Collider* collider1, Collider* collider2)
 {
-	if (collider1->type == COLLIDER_PLAYERFUTURE && collider1->type == COLLIDER_SOLID_FLOOR)
+	if (collider1->type == COLLIDER_PLAYERFUTURE && collider2->type == COLLIDER_SOLID_FLOOR)
 	{
 		SDL_Rect intersectCol;
 		if (SDL_IntersectRect(&collider1->rect, &collider2->rect, &intersectCol));
 		//future player collider and a certain wall collider have collided
-
-		if (player1->speed.y > 0) //if falling down
 		{
-			if (player1->playerCollider->rect.y + player1->playerCollider->rect.h <= collider2->rect.y)//Checking player is above the collider
+			if (isgreater(player1->speed.y, 0.0f)) //if falling down
 			{
-				if (player1->speed.x == 0) //if not moving horizontally
-					player1->speed.y -= intersectCol.h;
-
-				else if (player1->speed.x < 0) //if moving left
+				if (player1->playerCollider->rect.y + player1->playerCollider->rect.h <= collider2->rect.y)//Checking player is above the collider
 				{
-					if (intersectCol.h >= intersectCol.w)
-					{
-						if (collider1->rect.x <= collider2->rect.x + collider2->rect.w)
-							player1->speed.y -= intersectCol.h;
-						else
-							player1->speed.x += intersectCol.w;
-					}
-					else
+					if (App->cmpf(player1->speed.x, 0.0f)) //if not moving horizontally
 						player1->speed.y -= intersectCol.h;
+
+					else if (isless(player1->speed.x, 0.0f)) //if moving left
+					{
+						if (intersectCol.h >= intersectCol.w)
+						{
+							if (collider1->rect.x <= collider2->rect.x + collider2->rect.w)
+								player1->speed.y -= intersectCol.h;
+							else
+								player1->speed.x += intersectCol.w;
+						}
+						else
+							player1->speed.y -= intersectCol.h;
+					}
+
+					else if (isgreater(player1->speed.x, 0.0f)) //if moving right
+					{
+						if (intersectCol.h >= intersectCol.w)
+						{
+							if (collider1->rect.x + collider1->rect.w >= collider2->rect.x)
+								player1->speed.y -= intersectCol.h;
+							else
+								player1->speed.x -= intersectCol.w;
+						}
+						else
+							player1->speed.y -= intersectCol.h;
+
+					}
 				}
 
-				else if (player1->speed.x > 0) //if moving right
+				else //if player is not above the collider
 				{
-					if (intersectCol.h >= intersectCol.w)
-					{
-						if (collider1->rect.x + collider1->rect.w >= collider2->rect.x)
-							player1->speed.y -= intersectCol.h;
-						else
-							player1->speed.x -= intersectCol.w;
-					}
-					else
-						player1->speed.y -= intersectCol.h;
+					if (isless(player1->speed.x, 0.0f)) //if moving left
+						player1->speed.x += intersectCol.w;
 
+					else if (isgreater(player1->speed.x, 0.0f)) //if moving right
+						player1->speed.x -= intersectCol.w;
 				}
 			}
 
-			else //if player is not above the collider
+			else if (isless(player1->speed.y, 0.0f))
 			{
-				if (player1->speed.x < 0) //if moving left
+				if (player1->playerCollider->rect.y >= collider2->rect.y + collider2->rect.h)
+				{
+					if (App->cmpf(player1->speed.x, 0.0f))
+						player1->speed.y += intersectCol.h;
+
+					else if (isless(player1->speed.x, 0.0f))
+					{
+						if (intersectCol.h >= intersectCol.w)
+						{
+							if (collider1->rect.x <= collider2->rect.x + collider2->rect.w)
+								player1->speed.y += intersectCol.h;
+							else
+								player1->speed.x += intersectCol.w;
+						}
+						else
+							player1->speed.y += intersectCol.h;
+					}
+					else if (isgreater(player1->speed.x, 0.0f))
+					{
+						if (intersectCol.h >= intersectCol.w)
+						{
+							if (collider1->rect.x + collider1->rect.w >= collider2->rect.x)
+								player1->speed.y += intersectCol.h;
+							else
+								player1->speed.x -= intersectCol.w;
+						}
+						else
+							player1->speed.y += intersectCol.h;
+					}
+				}
+
+				else
+				{
+					if (isless(player1->speed.x, 0.0f))
+						player1->speed.x += intersectCol.w;
+
+					else if (isgreater(player1->speed.x, 0.0f))
+						player1->speed.x -= intersectCol.w;
+				}
+			}
+			else
+			{
+				if (isless(player1->speed.x, 0.0f))
 					player1->speed.x += intersectCol.w;
 
-				else if (player1->speed.x > 0) //if moving right
+				else if (isgreater(player1->speed.x, 0.0f))
 					player1->speed.x -= intersectCol.w;
 			}
 		}
+		//Rounding speed value
+		if (isless(player1->speed.y, 1) && isgreater(player1->speed.y, -1))
+			player1->speed.y = 0;
+		if (isless(player1->speed.x, 1) && isgreater(player1->speed.x, -1))
+			player1->speed.x = 0;
 	}
 }
 

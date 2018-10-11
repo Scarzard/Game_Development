@@ -8,7 +8,7 @@
 #include "SDL/include/SDL.h"
 #include "PugiXml/src/pugixml.hpp"
 
-class Collider;
+struct Collider;
 
 struct Player
 {
