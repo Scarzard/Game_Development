@@ -213,6 +213,18 @@ bool j1Map::Load(const char* file_name)
 
 	}
 
+	pugi::xml_node image_node;
+	for (image_node = map_file.child("map").child("imagelayer"); image_node && ret; image_node = image_node.next_sibling("imagelayer"))
+	{
+		ImageLayer* image = new ImageLayer();
+
+		if (ret == true)
+		{
+			ret = LoadImageLayer(image_node, image);
+		}
+		data.image.add(image);
+	}
+
 	pugi::xml_node col;
 
 	for (col = map_file.child("map").child("objectgroup"); col && ret; col = col.next_sibling("objectgroup"))
@@ -220,8 +232,7 @@ bool j1Map::Load(const char* file_name)
 		std::string tmp = col.child("properties").child("property").attribute("value").as_string();
 		if (tmp == "Collision")
 			LoadMapCollisions(col);
-		else if (tmp == "player1")
-			;
+		else if (tmp == "player1");
 	}
 
 	if(ret == true)
@@ -348,7 +359,41 @@ bool j1Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 	return ret;
 }
 
+bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
+{
+	bool ret = true;
+	pugi::xml_node image = tileset_node.child("image");
 
+	if (image == NULL)
+	{
+		LOG("Error parsing tileset xml file: Cannot find 'image' tag.");
+		ret = false;
+	}
+	else
+	{
+		set->texture = App->tex->Load(PATH(folder.GetString(), image.attribute("source").as_string()));
+		int w, h;
+		SDL_QueryTexture(set->texture, NULL, NULL, &w, &h);
+		set->tex_width = image.attribute("width").as_int();
+
+		if (set->tex_width <= 0)
+		{
+			set->tex_width = w;
+		}
+
+		set->tex_height = image.attribute("height").as_int();
+
+		if (set->tex_height <= 0)
+		{
+			set->tex_height = h;
+		}
+
+		set->num_tiles_width = set->tex_width / set->tile_width;
+		set->num_tiles_height = set->tex_height / set->tile_height;
+	}
+
+	return ret;
+}
 
 
 bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
