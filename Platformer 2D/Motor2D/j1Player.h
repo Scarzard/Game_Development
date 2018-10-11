@@ -63,7 +63,8 @@ public:
 
 	void LoadAnimations();
 	void OnCollision(Collider* collider1, Collider* collider2);
-	void CheckCollision();
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
 
 private:
 

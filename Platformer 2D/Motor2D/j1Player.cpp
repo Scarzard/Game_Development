@@ -189,11 +189,6 @@ void j1Player::LoadAnimations()
 	}
 }
 
-void j1Player::CheckCollision() 
-{
-
-}
-
 void j1Player::HorizontalInput()
 {
 	// Check horizontal movement
@@ -290,4 +285,22 @@ void j1Player::OnCollision(Collider* collider1, Collider* collider2)
 			}
 		}
 	}
+}
+
+bool j1Player::Load(pugi::xml_node &node)
+{
+	player1->position.x = node.child("position").attribute("x").as_int();
+	player1->position.y = node.child("position").attribute("y").as_int();
+
+	return true;
+}
+
+bool j1Player::Save(pugi::xml_node &node) const
+{
+	pugi::xml_node position = node.append_child("position");
+
+	position.append_attribute("x") = player1->position.x;
+	position.append_attribute("y") = player1->position.y;
+
+	return true;
 }
