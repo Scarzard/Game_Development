@@ -27,11 +27,11 @@
   </map>
 
   <player>
-    <runningSpeed value ="3"/>
-    <jumpStrength x="0" y="35"/>
-    <dashValue x="300" y ="0"/>
-    <dashDuration value = "333"/>
-    <gravity value ="-35"/>
+    <position x ="75" y ="350"/>
+    <playerSpeed value ="3"/>
+    <jumpStrength value ="7"/>
+    <gravity value ="8"/>
+    <alive value = "true"/>
   </player>
 
 </config>
