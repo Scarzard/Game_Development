@@ -54,7 +54,9 @@ bool j1Player::Start()
 		LoadAnimations();
 	}
 	
-	player1->playerCollider = App->collision->AddCollider({ player1->position.x, player1->position.y, 7, 6 }, COLLIDER_PLAYER, this);
+	player1->playerCollider = App->collision->FindPlayer();
+	player1->playerNextFrameCol = App->collision->AddCollider({ player1->playerCollider->rect.x, player1->playerCollider->rect.y, player1->playerCollider->rect.w, player1->playerCollider->rect.h }, COLLIDER_PLAYERFUTURE, this);
+
 	player1->currentAnimation = &player1->idle;
 
 	return true;
@@ -76,9 +78,7 @@ bool j1Player::Update(float dt)
 
 		HorizontalInput();
 		VerticalInput();
-		
 	}
-
 
 	ApplyGravity();
 
@@ -86,7 +86,7 @@ bool j1Player::Update(float dt)
 
 	App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame());
 	player1->position.x += player1->speed.x;
-	player1->position.y += player1->speed.y/2;
+	player1->position.y += player1->speed.y;
 
 	if (player1->facingLeft)
 		App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame());
@@ -231,8 +231,7 @@ void j1Player::VerticalInput()
 void j1Player::UpdateColliders()
 {
 	player1->playerCollider->SetPos(player1->position.x + player1->colliderOffset.x, player1->position.y + player1->colliderOffset.y);
-
-
+	player1->playerNextFrameCol->SetPos(player1->playerCollider->rect.x + player1->speed.x, player1->playerCollider->rect.y + player1->speed.y);
 }
 
 void j1Player::ApplyGravity()

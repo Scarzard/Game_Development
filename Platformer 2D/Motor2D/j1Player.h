@@ -25,7 +25,7 @@ struct Player
 	Collider*		playerCollider		= nullptr;
 	Collider*		playerNextFrameCol	= nullptr;
 
-	iPoint colliderOffset = { 0,0 };
+	iPoint colliderOffset = { 9,6 };
 
 	SDL_Texture*	playerTexture		= nullptr;
 

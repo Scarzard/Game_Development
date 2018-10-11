@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="200" height="75" tilewidth="16" tileheight="16" infinite="0" nextobjectid="225">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="200" height="75" tilewidth="16" tileheight="16" infinite="0" nextobjectid="227">
  <tileset firstgid="1" name="Warp" tilewidth="16" tileheight="16" tilecount="408" columns="24">
   <image source="tilesets.png" width="384" height="284"/>
  </tileset>
@@ -15009,7 +15009,7 @@
  </layer>
  <imagelayer name="Capa de Imagen 2" offsetx="26" offsety="16"/>
  <imagelayer name="Capa de Imagen 1" visible="0" offsetx="26" offsety="18">
-  <image source="middleground.png" width="272" height="176"/>
+  <image source="middleground.png"/>
  </imagelayer>
  <objectgroup name="Collision" offsetx="26.5" offsety="17.75">
   <properties>
@@ -15569,6 +15569,11 @@
   <object id="224" x="2128" y="240" width="16" height="80">
    <properties>
     <property name="type" value="levelEnd"/>
+   </properties>
+  </object>
+  <object id="225" x="9" y="6" width="32" height="42">
+   <properties>
+    <property name="type" value="player"/>
    </properties>
   </object>
  </objectgroup>

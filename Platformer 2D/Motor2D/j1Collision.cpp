@@ -125,11 +125,23 @@ void j1Collision::DebugDraw()
 			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 		case COLLIDER_PLAYER: // green
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
+		case COLLIDER_PLAYERFUTURE: // dark green
+			App->render->DrawQuad(colliders[i]->rect, 0, 185, 0, alpha);
 		case COLLIDER_PHASABLE_FLOOR: //light blue
 			App->render->DrawQuad(colliders[i]->rect, 125, 255, 255, alpha);
 		}
 
 	}
+}
+
+Collider * j1Collision::FindPlayer()
+{
+	for (uint i = 0; colliders[i] != nullptr; ++i)
+	{
+		if (colliders[i]->type == COLLIDER_PLAYER)
+			return colliders[i];
+	}
+	return nullptr;
 }
 
 bool j1Collision::CleanUp()

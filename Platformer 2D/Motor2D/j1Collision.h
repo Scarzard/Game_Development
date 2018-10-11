@@ -61,6 +61,8 @@ public:
 	void DebugDraw();
 	bool debug = false;
 
+	Collider* FindPlayer();
+
 private:
 
 	Collider* colliders[MAX_COLLIDERS];
