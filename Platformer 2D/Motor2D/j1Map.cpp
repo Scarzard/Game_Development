@@ -234,7 +234,6 @@ bool j1Map::Load(const char* file_name)
 		std::string tmp = col.child("properties").child("property").attribute("value").as_string();
 		if (tmp == "Collision")
 			LoadMapCollisions(col);
-		else if (tmp == "player1");
 	}
 
 	if(ret == true)

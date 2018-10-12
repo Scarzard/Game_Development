@@ -63,6 +63,7 @@ bool j1Player::Start()
 
 bool j1Player::PreUpdate()
 {
+
 	return true;
 }
 
@@ -108,7 +109,12 @@ bool j1Player::Update(float dt)
 
 
 bool j1Player::CleanUp()
-{
+{/*
+	if (player1->playerCollider != nullptr)
+		player1->playerCollider->to_delete = true;
+	else 
+		player1->playerCollider->to_delete = false;
+*/
 	return true;
 }
 

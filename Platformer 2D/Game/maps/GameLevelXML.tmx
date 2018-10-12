@@ -8,6 +8,18 @@
    <image width="1280" height="597" source="../../../../../../Desktop/dasd/bg.png"/>
   </tile>
  </tileset>
+ <imagelayer name="BG" offsetx="26.6667" offsety="32">
+  <image source="bg.png" width="1280" height="597"/>
+ </imagelayer>
+ <imagelayer name="Copy of BG" offsetx="28" offsety="628.833">
+  <image source="bg.png" width="1280" height="597"/>
+ </imagelayer>
+ <imagelayer name="Copy of Copy of BG" offsetx="1308" offsety="627.167">
+  <image source="bg.png" width="1280" height="597"/>
+ </imagelayer>
+ <imagelayer name="Copy of Copy of Copy of BG" offsetx="1306.33" offsety="31.8333">
+  <image source="bg.png" width="1280" height="597"/>
+ </imagelayer>
  <objectgroup name="Background" offsetx="26.5" offsety="17.75">
   <object id="259" gid="409" x="0" y="608" width="1280" height="597"/>
   <object id="260" gid="409" x="0" y="1200" width="1280" height="597"/>
