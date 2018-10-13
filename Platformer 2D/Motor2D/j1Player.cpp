@@ -275,7 +275,8 @@ bool j1Player::CenterCameraOnPlayer()
 		if (player1->position.x > App->render->camera.x + w) { App->render->camera.x -= player1->speed.x * 2; }
 		else if (player1->position.x < App->render->camera.x + w) { App->render->camera.x += player1->speed.x * 2; }
 
-
+		if (player1->position.y > App->render->camera.y + h) { App->render->camera.y -= player1->speed.y * 2; }
+		else if (player1->position.y < App->render->camera.y + h) { App->render->camera.y += player1->speed.y * 2; }
 
 	return true;
 
