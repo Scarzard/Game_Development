@@ -81,6 +81,7 @@ bool j1Player::Update(float dt)
 		HorizontalInput();
 		VerticalInput();
 
+		JumpAnimations();
 
 		ApplyGravity();
 
@@ -115,12 +116,12 @@ bool j1Player::PostUpdate()
 
 
 bool j1Player::CleanUp()
-{/*
+{
 	if (player1->playerCollider != nullptr)
 		player1->playerCollider->to_delete = true;
 	else 
 		player1->playerCollider->to_delete = false;
-*/
+
 	return true;
 }
 
@@ -199,6 +200,28 @@ void j1Player::LoadAnimations()
 
 		}
 
+		// Load fall
+		if (tmp == "fall")
+		{
+			// Loop all frames and push them into animation
+			for (pugi::xml_node frameIterator = animFinder.child("object"); frameIterator; frameIterator = frameIterator.next_sibling())
+			{
+				SDL_Rect frameToPush = { frameIterator.attribute("x").as_int(), frameIterator.attribute("y").as_int(), frameIterator.attribute("width").as_int(), frameIterator.attribute("height").as_int() };
+				player1->fall.PushBack(frameToPush);
+			}
+
+			for (pugi::xml_node propertyIterator = animFinder.child("properties").first_child(); propertyIterator; propertyIterator = propertyIterator.next_sibling())
+			{
+				std::string checkName = propertyIterator.attribute("name").as_string();
+
+				if (checkName == "loop")
+					player1->fall.loop = propertyIterator.attribute("value").as_bool();
+				else if (checkName == "speed")
+					player1->fall.speed = propertyIterator.attribute("value").as_float();
+			}
+
+		}
+
 	}
 }
 
@@ -256,6 +279,17 @@ void j1Player::Respawn()
 	App->render->cameraRestart = true;
 
 	player1->alive = true;
+}
+
+void j1Player::JumpAnimations()
+{
+	if (player1->jumping)
+	{
+		if (player1->speed.y > 0)
+			player1->currentAnimation = &player1->fall;
+		else if (player1->speed.y < 0)
+			player1->currentAnimation = &player1->jump;
+	}
 }
 
 void j1Player::OnCollision(Collider* collider1, Collider* collider2)

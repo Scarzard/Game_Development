@@ -34,6 +34,7 @@ struct Player
 	Animation idle;
 	Animation run;
 	Animation jump;
+	Animation fall;
 
 public:
 };
@@ -73,6 +74,7 @@ private:
 	void UpdateColliders();
 	void ApplyGravity();
 	void Respawn();
+	void JumpAnimations();
 
 	bool CenterCameraOnPlayer();
 
