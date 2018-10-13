@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="75" tilewidth="16" tileheight="16" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="75" tilewidth="16" tileheight="16" nextobjectid="38">
  <tileset firstgid="1" name="tilesetsv2" tilewidth="16" tileheight="16" tilecount="408" columns="24">
   <image source="tilesetsv2.png" width="384" height="284"/>
  </tileset>
+ <imagelayer name="Image Layer 1" offsetx="-16" offsety="0">
+  <image source="../../../../../../Desktop/GGXD0OR.jpg" width="1920" height="1080"/>
+ </imagelayer>
  <layer name="Tile Layer 1" width="200" height="75">
   <data>
    <tile gid="232"/>
@@ -15007,4 +15010,33 @@
    <tile gid="0"/>
   </data>
  </layer>
+ <objectgroup name="Object Layer 1">
+  <object id="2" x="0" y="592" width="160" height="32"/>
+  <object id="4" x="160" y="432" width="64" height="416"/>
+  <object id="6" x="128" y="512" width="32" height="16"/>
+  <object id="7" x="288" y="352" width="80" height="16"/>
+  <object id="8" x="448" y="576" width="64" height="288"/>
+  <object id="9" x="512" y="544" width="96" height="320"/>
+  <object id="11" x="640" y="352" width="64" height="512"/>
+  <object id="12" x="624" y="496" width="16" height="16"/>
+  <object id="13" x="544" y="416" width="16" height="16"/>
+  <object id="14" x="432" y="448" width="48" height="16"/>
+  <object id="16" x="480" y="256" width="64" height="224"/>
+  <object id="17" x="800" y="304" width="32" height="32"/>
+  <object id="19" x="944" y="288" width="32" height="32"/>
+  <object id="21" x="880" y="384" width="32" height="32"/>
+  <object id="22" x="1008" y="432" width="32" height="32"/>
+  <object id="23" x="944" y="496" width="32" height="32"/>
+  <object id="24" x="1008" y="576" width="32" height="32"/>
+  <object id="25" x="1088" y="512" width="32" height="32"/>
+  <object id="26" x="1200" y="352" width="320" height="208"/>
+  <object id="27" x="1168" y="800" width="96" height="384"/>
+  <object id="28" x="1264" y="736" width="96" height="64"/>
+  <object id="31" x="1360" y="704" width="96" height="48"/>
+  <object id="32" x="1456" y="656" width="160" height="64"/>
+  <object id="33" x="1616" y="496" width="112" height="176"/>
+  <object id="34" x="1584" y="576" width="32" height="16"/>
+  <object id="35" x="1072" y="320" width="32" height="32"/>
+  <object id="37" x="1360" y="288" width="16" height="64"/>
+ </objectgroup>
 </map>
