@@ -72,6 +72,7 @@ private:
 	void VerticalInput();
 	void UpdateColliders();
 	void ApplyGravity();
+	void Respawn();
 
 	bool CenterCameraOnPlayer();
 

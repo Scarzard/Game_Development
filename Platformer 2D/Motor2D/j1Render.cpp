@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Window.h"
 #include "j1Render.h"
+#include "j1Map.h"
 
 #define VSYNC true
 
@@ -69,6 +70,8 @@ bool j1Render::PreUpdate()
 
 bool j1Render::Update(float dt)
 {
+	if (cameraRestart)
+		ResetCamera();
 	return true;
 }
 
@@ -244,4 +247,11 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 	}
 
 	return ret;
+}
+
+void j1Render::ResetCamera()
+{
+	camera.x = App->map->data.cameraStartingPoint.x;
+	camera.y = App->map->data.cameraStartingPoint.y;
+	cameraRestart = false;
 }

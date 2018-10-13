@@ -79,6 +79,7 @@ struct MapData
 	int					tile_height;
 	int					startingPointX;
 	int					startingPointY;
+	iPoint				cameraStartingPoint;
 	SDL_Color			background_color;
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;

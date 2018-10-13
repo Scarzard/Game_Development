@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Window.h"
 #include "j1Textures.h"
+#include "j1Map.h"
 #include "p2Log.h"
 #include <string>
 #include "j1Input.h"
@@ -79,13 +80,18 @@ bool j1Player::Update(float dt)
 
 		HorizontalInput();
 		VerticalInput();
+
+
+		ApplyGravity();
+
+		CenterCameraOnPlayer();
+
+		UpdateColliders();
 	}
-
-	ApplyGravity();
-
-	CenterCameraOnPlayer();
-
-	UpdateColliders();
+	else if (!player1->alive)
+	{
+		Respawn();
+	}
 
 	return true;
 
@@ -241,6 +247,17 @@ void j1Player::ApplyGravity()
 	player1->speed.y += player1->gravity;
 }
 
+void j1Player::Respawn()
+{
+	player1->speed.SetToZero();
+	player1->position.x = App->map->data.startingPointX;
+	player1->position.y = App->map->data.startingPointY;
+	UpdateColliders();
+	App->render->cameraRestart = true;
+
+	player1->alive = true;
+}
+
 void j1Player::OnCollision(Collider* collider1, Collider* collider2)
 {
 
@@ -270,9 +287,9 @@ void j1Player::OnCollision(Collider* collider1, Collider* collider2)
 
 	// COLLISIONS ------------------------------------------------------------------------------------ //
 
-	if (collider1->type == COLLIDER_PLAYER && collider2->type == COLLIDER_DEATH)
+	if (collider1->type == COLLIDER_PLAYERFUTURE && collider2->type == COLLIDER_DEATH)
 	{
-
+		player1->alive = false;
 	}
 }
 
