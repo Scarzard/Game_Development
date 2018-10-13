@@ -65,7 +65,14 @@ bool j1Player::Start()
 
 bool j1Player::PreUpdate()
 {
+	if (player1->alive == true) {
 
+		player1->currentAnimation = &player1->idle;
+		player1->speed.x = 0;
+		HorizontalInput();
+		VerticalInput();
+		ApplyGravity();
+	}
 	return true;
 }
 
@@ -75,17 +82,14 @@ bool j1Player::Update(float dt)
 	//Player controls
 	if (player1->alive == true) {
 
-		player1->currentAnimation = &player1->idle;
-		player1->speed.x = 0;
 
-		HorizontalInput();
-		VerticalInput();
 
 		JumpAnimations();
 
-		ApplyGravity();
-
 		CenterCameraOnPlayer();
+
+		player1->position.x += player1->speed.x;
+		player1->position.y += player1->speed.y;
 
 		UpdateColliders();
 	}
@@ -95,15 +99,11 @@ bool j1Player::Update(float dt)
 	}
 
 	return true;
-
 }
 
 
 bool j1Player::PostUpdate()
 {
-	player1->position.x += player1->speed.x;
-	player1->position.y += player1->speed.y;
-
 	if (player1->facingLeft)
 		App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame(), SDL_FLIP_NONE);
 
@@ -251,7 +251,7 @@ void j1Player::VerticalInput()
 	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
 	{
 		player1->speed.y = -player1->jumpStrength;
-		/*player1->jump.Reset();*/
+		player1->jump.Reset();
 		player1->jumping = true;
 	}
 
@@ -267,6 +267,7 @@ void j1Player::UpdateColliders()
 
 void j1Player::ApplyGravity()
 {
+	if (player1->speed.y < 9)
 	player1->speed.y += player1->gravity;
 }
 
@@ -302,7 +303,7 @@ void j1Player::OnCollision(Collider* collider1, Collider* collider2)
 		if (SDL_IntersectRect(&collider1->rect, &collider2->rect, &intersectCol));
 		//future player collider and a certain wall collider have collided
 		{
-			if (player1->speed.y > 0)
+			if (player1->speed.y > 0) // If player is falling
 			{
 				if (collider1->rect.y < collider2->rect.y) //Checking if player is colliding from above
 				{
@@ -310,12 +311,16 @@ void j1Player::OnCollision(Collider* collider1, Collider* collider2)
 				}
 			}
 
-			else if ((int)player1->speed.y == 0)
+			else if (player1->speed.y == 0)
 			{
+				if (player1->speed.x > 0)
+				{
+					if (collider1->rect.x < collider2->rect.x)
+					{
+						player1->speed.x -= intersectCol.w;
+					}
+				}
 			}
-
-			if (player1->speed.y > -1.0f && player1->speed.y < 1.0f)
-				player1->speed.y = 0.0f;
 		}
 	}
 
