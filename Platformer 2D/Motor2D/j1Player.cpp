@@ -110,6 +110,25 @@ bool j1Player::PostUpdate()
 	if (!player1->facingLeft)
 		App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame(), SDL_FLIP_HORIZONTAL);
 
+	p2List_item<ImageLayer*>* img = nullptr;
+
+	for (img = App->map->data.image.start; img; img = img->next)
+	{
+		if (img->data->speed > 0)
+		{
+			if (player1->parallaxToLeft = true && App->render->camera.x > 200)
+			{
+				img->data->position.x += img->data->speed;
+			}
+			else if (player1->parallaxToRight = true)
+			{
+				img->data->position.x -= img->data->speed;
+			}
+
+		}
+	}
+
+
 	return true;
 }
 
@@ -334,11 +353,21 @@ void j1Player::OnCollision(Collider* collider1, Collider* collider2)
 
 bool j1Player::CenterCameraOnPlayer()
 {
-	uint w, h;
-	App->win->GetWindowSize(w, h); 
+		uint w, h;
+		App->win->GetWindowSize(w, h); 
 
-		if (player1->position.x > App->render->camera.x + w) { App->render->camera.x -= player1->speed.x * 2; }
-		else if (player1->position.x < App->render->camera.x + w) { App->render->camera.x += player1->speed.x * 2; }
+		if (player1->position.x > App->render->camera.x + w) 
+		{ 
+			App->render->camera.x -= player1->speed.x * 2;
+			player1->parallaxToRight = true;
+		
+		}
+		else if (player1->position.x < App->render->camera.x + w) 
+		{ 
+			App->render->camera.x += player1->speed.x * 2; 
+
+			player1->parallaxToLeft = true;
+		}
 
 		if (player1->position.y > App->render->camera.y + h) { App->render->camera.y -= player1->speed.y * 2; }
 		else if (player1->position.y < App->render->camera.y + h) { App->render->camera.y += player1->speed.y * 2; }

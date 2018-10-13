@@ -21,6 +21,10 @@ struct Player
 	bool	jumping =	false;
 
 	bool	facingLeft	=	false;
+	bool playerMoving = false;
+
+	bool parallaxToRight = false;
+	bool parallaxToLeft = false;
 	
 	Collider*		playerCollider		= nullptr;
 	Collider*		playerNextFrameCol	= nullptr;

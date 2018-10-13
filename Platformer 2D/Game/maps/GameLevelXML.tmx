@@ -3,11 +3,14 @@
  <tileset firstgid="1" name="Warp" tilewidth="16" tileheight="16" tilecount="408" columns="24">
   <image source="tilesets.png" width="384" height="284"/>
  </tileset>
- <imagelayer name="Background" offsetx="-84.8485" offsety="-84.8485">
-  <image source="background.png" width="2400" height="1760"/>
+ <imagelayer name="Background" offsetx="-384.849" offsety="-60.8485">
+  <image source="background.png" width="4800" height="1760"/>
  </imagelayer>
- <imagelayer name="ParallaxLayer" offsetx="-275.758" offsety="-63.6364">
-  <image source="middleground-no-fungus.png" width="2720" height="1760"/>
+ <imagelayer name="ParallaxLayer" offsetx="-384" offsety="-64">
+  <image source="middleground-no-fungus.png" width="5440" height="1760"/>
+  <properties>
+   <property name="parallaxSpeed" type="float" value="1.5"/>
+  </properties>
  </imagelayer>
  <layer name="Scenery" width="200" height="75" offsetx="26.5" offsety="17.75">
   <data>

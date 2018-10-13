@@ -435,6 +435,7 @@ bool j1Map::LoadImageLayer(pugi::xml_node& node, ImageLayer* img)
 	img->position.y = img->offset_y;
 
 	pugi::xml_node image = node.child("image");
+	pugi::xml_node property;
 
 	if (image == NULL)
 	{
@@ -447,6 +448,16 @@ bool j1Map::LoadImageLayer(pugi::xml_node& node, ImageLayer* img)
 		img->texture = App->tex->Load(PATH(folder.GetString(), image.attribute("source").as_string()));
 		img->width = image.attribute("width").as_int();
 		img->height = image.attribute("height").as_int();
+
+		
+		for (property = node.child("properties").child("property"); property; property = property.next_sibling("property"))
+		{
+			p2SString attribute = property.attribute("name").as_string();
+			if (attribute == "parallaxSpeed")
+			{
+				img->speed = property.attribute("value").as_float();
+			}
+		}
 	}
 
 	return ret;
