@@ -80,13 +80,13 @@ bool j1Player::Update(float dt)
 		VerticalInput();
 	}
 
-	ApplyGravity();
-
 	UpdateColliders();
 
 	App->render->Blit(player1->playerTexture, (int)player1->position.x, (int)player1->position.y, &player1->currentAnimation->GetCurrentFrame());
 	player1->position.x += player1->speed.x;
 	player1->position.y += player1->speed.y;
+
+	ApplyGravity();
 
 	/*if (player1->facingLeft)
 		App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame());
@@ -247,107 +247,18 @@ void j1Player::OnCollision(Collider* collider1, Collider* collider2)
 		if (SDL_IntersectRect(&collider1->rect, &collider2->rect, &intersectCol));
 		//future player collider and a certain wall collider have collided
 		{
-			if (isgreater(player1->speed.y, 0.0f)) //if falling down
+			if ((int)player1->speed.y > 0)
 			{
-				if (player1->playerCollider->rect.y + player1->playerCollider->rect.h <= collider2->rect.y)//Checking player is above the collider
+				if (collider1->rect.y < collider2->rect.y) //Checking if player is colliding from above
 				{
-					if (App->cmpf(player1->speed.x, 0.0f)) //if not moving horizontally
-						player1->speed.y -= intersectCol.h;
-
-					else if (isless(player1->speed.x, 0.0f)) //if moving left
-					{
-						if (intersectCol.h >= intersectCol.w)
-						{
-							if (collider1->rect.x <= collider2->rect.x + collider2->rect.w)
-								player1->speed.y -= intersectCol.h;
-							else
-								player1->speed.x += intersectCol.w;
-						}
-						else
-							player1->speed.y -= intersectCol.h;
-					}
-
-					else if (isgreater(player1->speed.x, 0.0f)) //if moving right
-					{
-						if (intersectCol.h >= intersectCol.w)
-						{
-							if (collider1->rect.x + collider1->rect.w >= collider2->rect.x)
-								player1->speed.y -= intersectCol.h;
-							else
-								player1->speed.x -= intersectCol.w;
-						}
-						else
-							player1->speed.y -= intersectCol.h;
-
-					}
-				}
-
-				else //if player is not above the collider
-				{
-					if (isless(player1->speed.x, 0.0f)) //if moving left
-						player1->speed.x += intersectCol.w;
-
-					else if (isgreater(player1->speed.x, 0.0f)) //if moving right
-						player1->speed.x -= intersectCol.w;
+					player1->speed.y -= intersectCol.h;
+					if (player1->speed.y < 0.0f)	player1->speed.y = 0.0f;
 				}
 			}
 
-			else if (isless(player1->speed.y, 0.0f))
-			{
-				if (player1->playerCollider->rect.y >= collider2->rect.y + collider2->rect.h)
-				{
-					if (App->cmpf(player1->speed.x, 0.0f))
-						player1->speed.y += intersectCol.h;
-
-					else if (isless(player1->speed.x, 0.0f))
-					{
-						if (intersectCol.h >= intersectCol.w)
-						{
-							if (collider1->rect.x <= collider2->rect.x + collider2->rect.w)
-								player1->speed.y += intersectCol.h;
-							else
-								player1->speed.x += intersectCol.w;
-						}
-						else
-							player1->speed.y += intersectCol.h;
-					}
-					else if (isgreater(player1->speed.x, 0.0f))
-					{
-						if (intersectCol.h >= intersectCol.w)
-						{
-							if (collider1->rect.x + collider1->rect.w >= collider2->rect.x)
-								player1->speed.y += intersectCol.h;
-							else
-								player1->speed.x -= intersectCol.w;
-						}
-						else
-							player1->speed.y += intersectCol.h;
-					}
-				}
-
-				else
-				{
-					if (isless(player1->speed.x, 0.0f))
-						player1->speed.x += intersectCol.w;
-
-					else if (isgreater(player1->speed.x, 0.0f))
-						player1->speed.x -= intersectCol.w;
-				}
-			}
-			else
-			{
-				if (isless(player1->speed.x, 0.0f))
-					player1->speed.x += intersectCol.w;
-
-				else if (isgreater(player1->speed.x, 0.0f))
-					player1->speed.x -= intersectCol.w;
-			}
+			if (player1->speed.y > -1.0f && player1->speed.y < 1.0f)
+				player1->speed.y = 0.0f;
 		}
-		//Rounding speed value
-		if (isless(player1->speed.y, 1) && isgreater(player1->speed.y, -1))
-			player1->speed.y = 0;
-		if (isless(player1->speed.x, 1) && isgreater(player1->speed.x, -1))
-			player1->speed.x = 0;
 	}
 }
 

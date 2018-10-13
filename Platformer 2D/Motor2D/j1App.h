@@ -52,7 +52,7 @@ public:
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
 
 	// Method to compare floats
-	bool cmpf(float A, float B, float epsilon = 0.005f)
+	bool compareFloat(float A, float B, float epsilon = 0.005f)
 	{
 		return (fabs(A - B) < epsilon);
 	};
