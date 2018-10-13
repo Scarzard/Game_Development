@@ -79,6 +79,7 @@ private:
 	void ApplyGravity();
 	void Respawn();
 	void JumpAnimations();
+	void SetSpeed();
 
 	bool CenterCameraOnPlayer();
 
