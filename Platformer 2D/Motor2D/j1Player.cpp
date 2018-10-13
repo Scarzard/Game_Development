@@ -90,6 +90,7 @@ bool j1Player::Update(float dt)
 		player1->position.y += player1->speed.y;
 
 		UpdateColliders();
+
 	}
 	else if (!player1->alive)
 	{
@@ -303,14 +304,37 @@ void j1Player::OnCollision(Collider* collider1, Collider* collider2)
 		{
 			if (player1->speed.y > 0) // If player is falling
 			{
-				if (collider1->rect.y < collider2->rect.y) //Checking if player is colliding from above
+				if (collider1->rect.y < collider2->rect.y) // Checking if player is colliding from above
 				{
-					player1->speed.y -= intersectCol.h;
-					player1->jumping = false;
+					if (player1->speed.x == 0)
+						player1->speed.y -= intersectCol.h, player1->jumping = false;
+
+					else if (player1->speed.x < 0)
+						if (intersectCol.h <= intersectCol.w)
+						{
+							if (collider1->rect.x <= collider2->rect.x + collider2->rect.w)
+								player1->speed.y -= intersectCol.h, player1->jumping = false;
+							else
+								player1->speed.x += intersectCol.w;
+						}
+						else
+							player1->speed.y -= intersectCol.h, player1->jumping = false;
+
+					else if (player1->speed.x > 0)
+						if (intersectCol.h <= intersectCol.w)
+						{
+							if (collider1->rect.x + collider1->rect.w <= collider2->rect.x)
+								player1->speed.y -= intersectCol.h, player1->jumping = false;
+							else
+								player1->speed.x -= intersectCol.w;
+						}
+						else
+							player1->speed.y -= intersectCol.h, player1->jumping = false;
+
 				}
 			}
 
-			else if (player1->speed.y == 0)
+			else if (player1->speed.y == 0) // If player is not moving vertically
 			{
 				if (player1->speed.x > 0)
 				{
@@ -318,6 +342,14 @@ void j1Player::OnCollision(Collider* collider1, Collider* collider2)
 					{
 						player1->speed.x -= intersectCol.w;
 					}
+				}
+			}
+
+			else if (player1->speed.y > 0) // If player is moving up
+			{
+				if (collider1->rect.y + collider1->rect.h > collider2->rect.y + collider2->rect.h) // Checking if player is colliding from below
+				{
+					player1->speed.y += intersectCol.h;
 				}
 			}
 		}
