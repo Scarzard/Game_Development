@@ -15521,6 +15521,6 @@
    <property name="Name" value="metadata"/>
   </properties>
   <object id="267" type="startingPos" x="32" y="432"/>
-  <object id="268" type="cameraStartingPoint" x="3" y="212"/>
+  <object id="268" type="cameraStartingPoint" x="-200" y="450"/>
  </objectgroup>
 </map>
