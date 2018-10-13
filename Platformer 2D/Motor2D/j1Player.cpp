@@ -82,8 +82,6 @@ bool j1Player::Update(float dt)
 	//Player controls
 	if (player1->alive == true) {
 
-
-
 		JumpAnimations();
 
 		CenterCameraOnPlayer();
@@ -308,6 +306,7 @@ void j1Player::OnCollision(Collider* collider1, Collider* collider2)
 				if (collider1->rect.y < collider2->rect.y) //Checking if player is colliding from above
 				{
 					player1->speed.y -= intersectCol.h;
+					player1->jumping = false;
 				}
 			}
 
