@@ -3,12 +3,12 @@
 	<input />
 	<window />
 	<textures />
-	<:anonymous />
+	<anonymous />
 	<audio />
 	<map />
 	<scene />
 	<player>
-		<position x="279" y="390.000946" />
+		<position x="288" y="256.600159" />
 	</player>
 	<renderer>
 		<camera x="0" y="0" />

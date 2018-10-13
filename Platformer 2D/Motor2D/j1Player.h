@@ -20,6 +20,8 @@ struct Player
 	bool	alive	=	false;
 	bool	jumping =	false;
 
+
+
 	bool	facingLeft	=	false;
 	
 	Collider*		playerCollider		= nullptr;
@@ -56,7 +58,7 @@ public:
 	// Called each loop iteration
 	bool PreUpdate();
 	bool Update(float dt);
-	//bool PostUpdate(float dt); //needead to update the player position that was changed in update(float dt);
+	bool PostUpdate(float dt); //needead to update the player position that was changed in update(float dt);
 
 	// Called before quitting
 	bool CleanUp();
@@ -72,6 +74,8 @@ private:
 	void VerticalInput();
 	void UpdateColliders();
 	void ApplyGravity();
+
+	bool CenterCameraOnPlayer();
 
 public:
 

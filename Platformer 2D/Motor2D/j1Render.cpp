@@ -44,7 +44,7 @@ bool j1Render::Awake(pugi::xml_node& config)
 	{
 		camera.w = App->win->screen_surface->w;
 		camera.h = App->win->screen_surface->h;
-		camera.x = 0;
+		camera.x =-200;
 		camera.y = 0;
 	}
 
@@ -129,8 +129,8 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	uint scale = App->win->GetScale();
 
 	SDL_Rect rect;
-	rect.x = (int)(camera.x * speed) + x * scale;
-	rect.y = (int)(camera.y * speed) + y * scale;
+	rect.x = (int)(-camera.x * speed) + x * scale;
+	rect.y = (int)(-camera.y * speed) + y * scale;
 
 	if(section != NULL)
 	{
@@ -190,8 +190,8 @@ bool j1Render::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a
 	SDL_Rect rec(rect);
 	if(use_camera)
 	{
-		rec.x = (int)(camera.x + rect.x * scale);
-		rec.y = (int)(camera.y + rect.y * scale);
+		rec.x = (int)(-camera.x + rect.x * scale);
+		rec.y = (int)(-camera.y + rect.y * scale);
 		rec.w *= scale;
 		rec.h *= scale;
 	}
