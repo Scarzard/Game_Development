@@ -3,29 +3,12 @@
  <tileset firstgid="1" name="Warp" tilewidth="16" tileheight="16" tilecount="408" columns="24">
   <image source="tilesets.png" width="384" height="284"/>
  </tileset>
- <tileset firstgid="409" name="Background" tilewidth="1280" tileheight="597" tilecount="1" columns="0">
-  <tile id="0">
-   <image source="../../../../../../Desktop/dasd/bg.png"/>
-  </tile>
- </tileset>
- <imagelayer name="BG" offsetx="26.6667" offsety="32">
-  <image source="bg.png" width="1280" height="597"/>
+ <imagelayer name="Background" offsetx="-84.8485" offsety="-84.8485">
+  <image source="background.png" width="2400" height="1760"/>
  </imagelayer>
- <imagelayer name="Copy of BG" offsetx="28" offsety="628.833">
-  <image source="bg.png" width="1280" height="597"/>
+ <imagelayer name="ParallaxLayer" offsetx="-275.758" offsety="-63.6364">
+  <image source="middleground-no-fungus.png" width="2720" height="1760"/>
  </imagelayer>
- <imagelayer name="Copy of Copy of BG" offsetx="1308" offsety="627.167">
-  <image source="bg.png" width="1280" height="597"/>
- </imagelayer>
- <imagelayer name="Copy of Copy of Copy of BG" offsetx="1306.33" offsety="31.8333">
-  <image source="bg.png" width="1280" height="597"/>
- </imagelayer>
- <objectgroup name="Background" offsetx="26.5" offsety="17.75">
-  <object id="259" gid="409" x="0" y="608" width="1280" height="597"/>
-  <object id="260" gid="409" x="0" y="1200" width="1280" height="597"/>
-  <object id="262" gid="409" x="1280" y="608" width="1280" height="597"/>
-  <object id="263" gid="409" x="1280" y="1200" width="1280" height="597"/>
- </objectgroup>
  <layer name="Scenery" width="200" height="75" offsetx="26.5" offsety="17.75">
   <data>
    <tile gid="232"/>
@@ -15056,7 +15039,7 @@
   </object>
   <object id="74" x="608" y="480" width="80" height="48">
    <properties>
-    <property name="Collision" type="bool" value="true"/>
+    <property name="Collision" type="bool" value="false"/>
     <property name="type" value="wall"/>
    </properties>
   </object>
