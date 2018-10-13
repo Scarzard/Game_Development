@@ -87,11 +87,9 @@ bool j1Player::Update(float dt)
 	player1->position.x += player1->speed.x;
 	player1->position.y += player1->speed.y;
 
-<<<<<<< HEAD
 	CenterCameraOnPlayer();
-=======
+
 	ApplyGravity();
->>>>>>> a89712d6552cb0b8a1a79287889a88311f98ef8f
 
 	/*if (player1->facingLeft)
 		App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame());
@@ -280,7 +278,10 @@ bool j1Player::CenterCameraOnPlayer()
 
 
 	return true;
+
+			
 }
+
 
 //void PlayerData::LoadPushbacks()
 //{
