@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="75" tilewidth="16" tileheight="16" nextobjectid="266">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="75" tilewidth="16" tileheight="16" nextobjectid="268">
  <tileset firstgid="1" name="Warp" tilewidth="16" tileheight="16" tilecount="408" columns="24">
   <image source="tilesets.png" width="384" height="284"/>
  </tileset>
  <tileset firstgid="409" name="Background" tilewidth="1280" tileheight="597" tilecount="1" columns="0">
   <tile id="0">
-   <image width="1280" height="597" source="../../../../../../Desktop/dasd/bg.png"/>
+   <image source="../../../../../../Desktop/dasd/bg.png"/>
   </tile>
  </tileset>
  <imagelayer name="BG" offsetx="26.6667" offsety="32">
@@ -15032,7 +15032,7 @@
  </layer>
  <objectgroup name="Collision" offsetx="26.5" offsety="17.75">
   <properties>
-   <property name="Name" value="Collision"/>
+   <property name="Name" value="collision"/>
   </properties>
   <object id="65" x="0" y="496" width="176" height="656">
    <properties>
@@ -15532,5 +15532,11 @@
   <object id="246" x="1488" y="224" width="32" height="16"/>
   <object id="247" x="1616" y="208" width="32" height="16"/>
   <object id="248" x="1536" y="160" width="32" height="16"/>
+ </objectgroup>
+ <objectgroup name="Metadata" offsetx="26.5" offsety="17.75">
+  <properties>
+   <property name="Name" value="metadata"/>
+  </properties>
+  <object id="267" type="startingPos" x="32" y="448"/>
  </objectgroup>
 </map>

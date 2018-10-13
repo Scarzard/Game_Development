@@ -77,6 +77,8 @@ struct MapData
 	int					height;
 	int					tile_width;
 	int					tile_height;
+	int					startingPointX;
+	int					startingPointY;
 	SDL_Color			background_color;
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
@@ -119,6 +121,7 @@ private:
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadImageLayer(pugi::xml_node& node, ImageLayer* set);
 	bool LoadMapCollisions(pugi::xml_node& node);
+	bool LoadMetadata(pugi::xml_node& node);
 
 public:
 

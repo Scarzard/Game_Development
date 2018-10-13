@@ -227,13 +227,16 @@ bool j1Map::Load(const char* file_name)
 		data.image.add(image);
 	}
 
-	pugi::xml_node col;
+	pugi::xml_node objectToLoad;
 
-	for (col = map_file.child("map").child("objectgroup"); col && ret; col = col.next_sibling("objectgroup"))
+	for (objectToLoad = map_file.child("map").child("objectgroup"); objectToLoad && ret; objectToLoad = objectToLoad.next_sibling("objectgroup"))
 	{
-		std::string tmp = col.child("properties").child("property").attribute("value").as_string();
-		if (tmp == "Collision")
-			LoadMapCollisions(col);
+		std::string tmp = objectToLoad.child("properties").child("property").attribute("value").as_string();
+		if (tmp == "collision")
+			LoadMapCollisions(objectToLoad);
+
+		else if (tmp == "metadata")
+			LoadMetadata(objectToLoad);
 	}
 
 	if(ret == true)
@@ -499,5 +502,31 @@ bool j1Map::LoadMapCollisions(pugi::xml_node &node)
 		}
 	}
 
+	return ret;
+}
+
+bool j1Map::LoadMetadata(pugi::xml_node & node)
+{
+	bool ret = true;
+
+	pugi::xml_node dataObj = node.child("object");
+
+	if (dataObj == NULL)
+	{
+		LOG("Error while parsing object node");
+		ret = false;
+	}
+
+	for (dataObj = node.child("object"); dataObj; dataObj = dataObj.next_sibling("object"))
+	{
+		std::string comparer = dataObj.attribute("type").as_string();
+
+		// Load walls
+		if (comparer == "startingPos")
+		{
+			data.startingPointX = dataObj.attribute("x").as_int();
+			data.startingPointY = dataObj.attribute("y").as_int();
+		}
+	}
 	return ret;
 }

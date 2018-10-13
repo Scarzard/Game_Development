@@ -29,13 +29,13 @@ bool j1Player::Awake(pugi::xml_node &config)
 	//DOESNT SET THE VALUES FOR THE VARIABLES. NOW ITS HARDCODED. NEED A FIX
 	player1->alive = config.child("alive").attribute("value").as_bool();
 
-	player1->position.x = config.child("position").attribute("x").as_float();
-	player1->position.y = config.child("position").attribute("y").as_float();
+	player1->position.x = config.child("position").attribute("x").as_int();
+	player1->position.y = config.child("position").attribute("y").as_int();
 
-	player1->playerSpeed = config.child("playerSpeed").attribute("value").as_float();
-	player1->jumpStrength = config.child("jumpStrength").attribute("value").as_float();
+	player1->playerSpeed = config.child("playerSpeed").attribute("value").as_int();
+	player1->jumpStrength = config.child("jumpStrength").attribute("value").as_int();
 
-	player1->gravity = config.child("gravity").attribute("value").as_float();
+	player1->gravity = config.child("gravity").attribute("value").as_int();
 
 	return true;
 }
@@ -81,32 +81,27 @@ bool j1Player::Update(float dt)
 		VerticalInput();
 	}
 
-	UpdateColliders();
-
-	App->render->Blit(player1->playerTexture, (int)player1->position.x, (int)player1->position.y, &player1->currentAnimation->GetCurrentFrame());
-	player1->position.x += player1->speed.x;
-	player1->position.y += player1->speed.y;
+	ApplyGravity();
 
 	CenterCameraOnPlayer();
 
-	ApplyGravity();
-
-	/*if (player1->facingLeft)
-		App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame());
-
-	else if (!player1->facingLeft)
-		App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame(), 1.0F, true);*/
+	UpdateColliders();
 
 	return true;
 
 }
 
 
-bool j1Player::PostUpdate(float dt)
+bool j1Player::PostUpdate()
 {
-	player1->position.x += player1->playerSpeed;
+	player1->position.x += player1->speed.x;
+	player1->position.y += player1->speed.y;
 
-	
+	if (player1->facingLeft)
+		App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame(), SDL_FLIP_NONE);
+
+	if (!player1->facingLeft)
+		App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame(), SDL_FLIP_HORIZONTAL);
 
 	return true;
 }
@@ -211,11 +206,13 @@ void j1Player::HorizontalInput()
 	{
 		player1->speed.x = player1->playerSpeed;
 		player1->currentAnimation = &player1->run;
+		player1->facingLeft = false;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		player1->speed.x = -player1->playerSpeed;
 		player1->currentAnimation = &player1->run;
+		player1->facingLeft = true;
 	}
 }
 
@@ -236,7 +233,7 @@ void j1Player::VerticalInput()
 void j1Player::UpdateColliders()
 {
 	player1->playerCollider->SetPos(player1->position.x + player1->colliderOffset.x, player1->position.y + player1->colliderOffset.y);
-	player1->playerNextFrameCol->SetPos(player1->playerCollider->rect.x + (int)player1->speed.x, player1->playerCollider->rect.y + (int)player1->speed.y);
+	player1->playerNextFrameCol->SetPos(player1->playerCollider->rect.x + player1->speed.x, player1->playerCollider->rect.y + player1->speed.y);
 }
 
 void j1Player::ApplyGravity()
@@ -246,24 +243,36 @@ void j1Player::ApplyGravity()
 
 void j1Player::OnCollision(Collider* collider1, Collider* collider2)
 {
+
+	// COLLISIONS ------------------------------------------------------------------------------------ //
 	if (collider1->type == COLLIDER_PLAYERFUTURE && collider2->type == COLLIDER_SOLID_FLOOR)
 	{
 		SDL_Rect intersectCol;
 		if (SDL_IntersectRect(&collider1->rect, &collider2->rect, &intersectCol));
 		//future player collider and a certain wall collider have collided
 		{
-			if ((int)player1->speed.y > 0)
+			if (player1->speed.y > 0)
 			{
 				if (collider1->rect.y < collider2->rect.y) //Checking if player is colliding from above
 				{
 					player1->speed.y -= intersectCol.h;
-					if (player1->speed.y < 0.0f)	player1->speed.y = 0.0f;
 				}
+			}
+
+			else if ((int)player1->speed.y == 0)
+			{
 			}
 
 			if (player1->speed.y > -1.0f && player1->speed.y < 1.0f)
 				player1->speed.y = 0.0f;
 		}
+	}
+
+	// COLLISIONS ------------------------------------------------------------------------------------ //
+
+	if (collider1->type == COLLIDER_PLAYER && collider2->type == COLLIDER_DEATH)
+	{
+
 	}
 }
 
@@ -282,38 +291,6 @@ bool j1Player::CenterCameraOnPlayer()
 
 			
 }
-
-
-//void PlayerData::LoadPushbacks()
-//{
-//	idle.PushBack({ 5, 17, 56, 73 });
-//
-//		running.PushBack({ 89, 17, 60, 73 });
-//		running.PushBack({ 180, 17, 60, 73 });
-//		running.PushBack({ 277, 17, 60, 73 });
-//		running.PushBack({ 375, 17, 60, 73 });
-//	running.PushBack({ 470, 17, 60, 73 });
-//	running.PushBack({ 565, 17, 60, 73 });
-//	running.loop = true;
-//	running.speed = 0.1f;
-//
-//	jumping_up.PushBack({ 672, 27, 53, 63 });
-//	jumping_up.PushBack({ 764, 0, 49, 75 });
-//	jumping_up.loop = false;
-//	jumping_up.speed = 0.2f;
-//
-//	falling.PushBack({ 861, 17, 53, 73 });
-//
-//	dashing.PushBack({ 635, 224, 79, 71 });
-//	dashing.PushBack({ 741, 226, 81, 69 });
-//	dashing.PushBack({ 834, 227, 82, 68 });
-//	dashing.PushBack({ 929, 228, 82, 67 });
-//	dashing.PushBack({ 390, 223, 73, 72 });
-//	dashing.PushBack({ 468, 219, 76, 69 });
-//	dashing.PushBack({ 548, 219, 76, 69 });
-//	dashing.loop = false;
-//	dashing.speed = 0.3f;
-//}
 
 
 bool j1Player::Load(pugi::xml_node &node)

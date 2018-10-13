@@ -12,15 +12,13 @@ struct Collider;
 
 struct Player
 {
-	fPoint position = { 0,0 };
-	fPoint speed = { 0,0 };
-	float playerSpeed = 0;
-	float jumpStrength = 0;
-	float gravity = 0;
+	iPoint position = { 0,0 };
+	iPoint speed = { 0,0 };
+	int playerSpeed = 0;
+	int jumpStrength = 0;
+	int gravity = 0;
 	bool	alive	=	false;
 	bool	jumping =	false;
-
-
 
 	bool	facingLeft	=	false;
 	
@@ -58,7 +56,7 @@ public:
 	// Called each loop iteration
 	bool PreUpdate();
 	bool Update(float dt);
-	bool PostUpdate(float dt); //needead to update the player position that was changed in update(float dt);
+	bool PostUpdate(); //needead to update the player position that was changed in update(float dt);
 
 	// Called before quitting
 	bool CleanUp();
