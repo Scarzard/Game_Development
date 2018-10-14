@@ -35,3 +35,14 @@ but all pushbacks (frame data) are read from the .tmx, and a designer can modify
 
 As stated on the license, anyone can look at or modify the code of this project. 
 It can be found here: https://github.com/Scarzard/Game_Development
+
+### --------  Authors  --------
+   
+Joel Cabaco Pérez
+   - [Joel's GitHub Link](https://github.com/dynamiczero99)
+   
+Victor Chen Chen
+   - [Victor's GitHub Link](https://github.com/Scarzard)
+
+
+
