@@ -6,6 +6,8 @@
 
 j1Collision::j1Collision()
 {
+	name.create("collision");
+
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;
 
@@ -66,6 +68,7 @@ bool j1Collision::PreUpdate()
 	{
 		if (colliders[i] != nullptr && colliders[i]->to_delete == true)
 		{
+			delete colliders[i]->callback;
 			delete colliders[i];
 			colliders[i] = nullptr;
 		}
@@ -184,6 +187,7 @@ bool j1Collision::CleanUp()
 	{
 		if (colliders[i] != nullptr)
 		{
+			delete colliders[i]->callback;
 			delete colliders[i];
 			colliders[i] = nullptr;
 		}

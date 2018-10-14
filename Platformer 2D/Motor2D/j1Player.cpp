@@ -181,10 +181,9 @@ bool j1Player::PostUpdate()
 
 bool j1Player::CleanUp()
 {
-	if (player1->playerCollider != nullptr)
-		player1->playerCollider->to_delete = true;
-	else 
-		player1->playerCollider->to_delete = false;
+	player1->currentAnimation = nullptr;
+
+	delete player1;
 
 	return true;
 }

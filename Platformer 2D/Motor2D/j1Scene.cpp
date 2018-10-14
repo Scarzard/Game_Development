@@ -8,6 +8,7 @@
 #include "j1Window.h"
 #include "j1Map.h"
 #include "j1Scene.h"
+#include "j1Player.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -64,13 +65,21 @@ bool j1Scene::Update(float dt)
 	//Start lvl 1
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		LoadLevel(1);
+		if (currentLevel == 1)
+			App->player->player1->alive = false;
+
+		else
+			LoadLevel(1), currentLevel = 1;
 	}
 
 	//Start lvl 2
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
-		LoadLevel(2);
+		if (currentLevel == 2)
+			App->player->player1->alive = false;
+
+		else
+			LoadLevel(2), currentLevel = 2;
 	}
 
 	//App->render->Blit(img, 0, 0);

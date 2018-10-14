@@ -5,6 +5,7 @@
 #include "j1Textures.h"
 #include "j1Map.h"
 #include "j1Collision.h"
+#include "j1Player.h"
 #include <math.h>
 #include <string>
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -139,14 +140,12 @@ bool j1Map::CleanUp()
 	p2List_item<Collider*>* collider_info;
 	collider_info = data.colliderList.start;
 
-
 	while (collider_info != NULL)
 	{
 		RELEASE(collider_info->data);
 		collider_info = collider_info->next;
 	}
 	data.colliderList.clear();
-
 
 	// Clean up the pugui tree
 	map_file.reset();
@@ -487,26 +486,26 @@ bool j1Map::LoadMapCollisions(pugi::xml_node &node)
 		// Load walls
 		if (comparer == "wall")
 		{
-			data.colliderList.add(App->collision->AddCollider(boundingbox, COLLIDER_SOLID_FLOOR));
+			data.colliderList.add(App->collision->AddCollider(boundingbox, COLLIDER_SOLID_FLOOR, App->player));
 			LOG("Created wall collider with position %d %d and dimensions of %d %d", boundingbox.x, boundingbox.y, boundingbox.w, boundingbox.h);
 		}
 
 		if (comparer == "death")
 		{
 
-			data.colliderList.add(App->collision->AddCollider(boundingbox, COLLIDER_DEATH));
+			data.colliderList.add(App->collision->AddCollider(boundingbox, COLLIDER_DEATH, App->player));
 			LOG("Created death collider with position %d %d and dimensions of %d %d", boundingbox.x, boundingbox.y, boundingbox.w, boundingbox.h);
 		}
 
 		if (comparer == "levelEnd")
 		{
-			data.colliderList.add(App->collision->AddCollider(boundingbox, COLLIDER_LEVELEND));
+			data.colliderList.add(App->collision->AddCollider(boundingbox, COLLIDER_LEVELEND, App->player));
 			LOG("Created level end collider with position %d %d and dimensions of %d %d", boundingbox.x, boundingbox.y, boundingbox.w, boundingbox.h);
 		}
 
 		if (comparer == "player")
 		{
-			data.colliderList.add(App->collision->AddCollider(boundingbox, COLLIDER_PLAYER));
+			data.colliderList.add(App->collision->AddCollider(boundingbox, COLLIDER_PLAYER, App->player));
 			LOG("Created player collider with position %d %d and dimensions of %d %d", boundingbox.x, boundingbox.y, boundingbox.w, boundingbox.h);
 		}
 	}
