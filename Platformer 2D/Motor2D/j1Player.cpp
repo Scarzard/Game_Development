@@ -89,6 +89,8 @@ bool j1Player::Update(float dt)
 			player1->jumpsLeft = 2;
 
 		CenterCameraOnPlayer();
+		if (App->render->camera.x > 4000)App->render->camera.x = 4000;
+		if (App->render->camera.x < 0)App->render->camera.x = 0;
 
 		//Check Horizontal Movement
 		//Right
