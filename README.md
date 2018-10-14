@@ -2,9 +2,9 @@ Warped by GroundZero
 
  -------- GAME INFO --------
 
-	Warped is a platformer game developed by two students at Universitat Politècnica de Catalunya for the Game Development subject. As of this version, the game has basic 	collisions with the environment, the player can walk left or right, jump, and if it falls on a pit, it's sent to the start of the level. The game reads the map and 	most of the gameplay values from .xml files, and .tmx files generated via Tiled.
+	Warped is a platformer game developed by two students at Universitat Politècnica de Catalunya for the Game Development subject. As of this version, the game has basic 		collisions with the environment, the player can walk left or right, jump, and if it falls on a pit, it's sent to the start of the level. The game reads the map and 		most of the gameplay values from .xml files, and .tmx files generated via Tiled.
 
-	DISCLAIMER: The tileset used in this game is copyright free (credit to ansimuz, tileset URL: https://ansimuz.itch.io/warped-caves), but the sprites used for the main 	character are taken from the 2007 game "Mega Man ZX Advent", developed 	by Inti Creates and published by Capcom. We do not own the rights for these sprites, nor we 	claim to have made them. All rights belong to Capcom.
+	DISCLAIMER: The tileset used in this game is copyright free (credit to ansimuz, tileset URL: https://ansimuz.itch.io/warped-caves), but the sprites used for the main 		character are taken from the 2007 game "Mega Man ZX Advent", developed 	by Inti Creates and published by Capcom. We do not own the rights for these sprites, nor we 		claim to have made them. All rights belong to Capcom.
 
 	--!!INNOVATION!!--
 
@@ -23,7 +23,7 @@ Warped by GroundZero
 	- F5:		Save current state of the game. (save file: "save_game.xml")
 	- F6:		Load state from earlier save.
 	- F9:		See colliders/hitboxes.
-	- F10:		Godmode (can walk over pits, can double jump limitless).
+	- F10:		Godmode (can walk over pits, can double jump limitless, character changes visually).
 
  --------  GITHUB  --------
 
