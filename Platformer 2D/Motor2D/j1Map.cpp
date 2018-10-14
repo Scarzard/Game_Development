@@ -130,15 +130,18 @@ bool j1Map::CleanUp()
 
 	while (image_info != NULL)
 	{
+		App->tex->UnLoad(image_info->data->texture);
 		RELEASE(image_info->data);
 		image_info = image_info->next;
 	}
 	data.image.clear();
 
+	// Remove all object layers
+
 	// Remove all colliders
 
-	p2List_item<Collider*>* collider_info;
-	collider_info = data.colliderList.start;
+	//p2List_item<Collider*>* collider_info;
+	//collider_info = data.colliderList.start;
 
 	//while (collider_info != NULL)
 	//{
@@ -147,7 +150,7 @@ bool j1Map::CleanUp()
 	//}
 	//data.colliderList.clear();
 
-	// Clean up the pugui tree
+	// Clean up the pugi tree
 	map_file.reset();
 
 	return true;
@@ -486,26 +489,26 @@ bool j1Map::LoadMapCollisions(pugi::xml_node &node)
 		// Load walls
 		if (comparer == "wall")
 		{
-			data.colliderList.add(App->collision->AddCollider(boundingbox, COLLIDER_SOLID_FLOOR, App->player));
+			App->collision->AddCollider(boundingbox, COLLIDER_SOLID_FLOOR, App->player);
 			LOG("Created wall collider with position %d %d and dimensions of %d %d", boundingbox.x, boundingbox.y, boundingbox.w, boundingbox.h);
 		}
 
 		if (comparer == "death")
 		{
 
-			data.colliderList.add(App->collision->AddCollider(boundingbox, COLLIDER_DEATH, App->player));
+			App->collision->AddCollider(boundingbox, COLLIDER_DEATH, App->player);
 			LOG("Created death collider with position %d %d and dimensions of %d %d", boundingbox.x, boundingbox.y, boundingbox.w, boundingbox.h);
 		}
 
 		if (comparer == "levelEnd")
 		{
-			data.colliderList.add(App->collision->AddCollider(boundingbox, COLLIDER_LEVELEND, App->player));
+			App->collision->AddCollider(boundingbox, COLLIDER_LEVELEND, App->player);
 			LOG("Created level end collider with position %d %d and dimensions of %d %d", boundingbox.x, boundingbox.y, boundingbox.w, boundingbox.h);
 		}
 
 		if (comparer == "player")
 		{
-			data.colliderList.add(App->collision->AddCollider(boundingbox, COLLIDER_PLAYER, App->player));
+			App->collision->AddCollider(boundingbox, COLLIDER_PLAYER, App->player);
 			LOG("Created player collider with position %d %d and dimensions of %d %d", boundingbox.x, boundingbox.y, boundingbox.w, boundingbox.h);
 		}
 	}

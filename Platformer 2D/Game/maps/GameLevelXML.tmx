@@ -15465,7 +15465,11 @@
     <property name="type" value="player"/>
    </properties>
   </object>
-  <object id="228" x="1409.17" y="400.25" width="16" height="16"/>
+  <object id="228" x="1409.17" y="400.25" width="16" height="16">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
   <object id="230" x="368" y="912" width="256" height="96">
    <properties>
     <property name="type" value="death"/>

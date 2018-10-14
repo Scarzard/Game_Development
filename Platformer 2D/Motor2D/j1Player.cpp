@@ -308,11 +308,9 @@ void j1Player::Respawn()
 	player1->position.x = App->map->data.startingPointX;
 	player1->position.y = App->map->data.startingPointY;
 
-	player1->playerCollider->SetPos(player1->position.x + player1->colliderOffset.x, player1->position.y + player1->colliderOffset.y);
-	player1->playerNextFrameCol->SetPos(player1->playerCollider->rect.x + player1->speed.x, player1->playerCollider->rect.y + player1->speed.y);
 	App->render->cameraRestart = true;
+	
 	ResetParallax();
-
 
 	player1->alive = true;
 }
@@ -323,15 +321,16 @@ void j1Player::RespawnInNewLevel()
 	player1->position.x = App->map->data.startingPointX;
 	player1->position.y = App->map->data.startingPointY;
 
+	player1->playerCollider = nullptr;
+	player1->playerNextFrameCol = nullptr;
+
 	player1->playerCollider = App->collision->FindPlayer();
 	player1->playerNextFrameCol =	App->collision->AddCollider({ player1->playerCollider->rect.x, player1->playerCollider->rect.y,
 									player1->playerCollider->rect.w, player1->playerCollider->rect.h }, COLLIDER_PLAYERFUTURE, this);
 
-	player1->playerCollider->SetPos(player1->position.x + player1->colliderOffset.x, player1->position.y + player1->colliderOffset.y);
-	player1->playerNextFrameCol->SetPos(player1->playerCollider->rect.x + player1->speed.x, player1->playerCollider->rect.y + player1->speed.y);
 	App->render->cameraRestart = true;
-	ResetParallax();
 
+	ResetParallax();
 
 	player1->changingLevel = false;
 }
