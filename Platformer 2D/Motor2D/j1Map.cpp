@@ -530,7 +530,6 @@ bool j1Map::LoadMetadata(pugi::xml_node & node)
 	{
 		std::string comparer = dataObj.attribute("type").as_string();
 
-		// Load walls
 		if (comparer == "startingPos")
 		{
 			data.startingPointX = dataObj.attribute("x").as_int();

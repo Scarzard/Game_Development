@@ -51,6 +51,8 @@ public:
 	SDL_Rect		viewport;
 	SDL_Color		background;
 	bool			cameraRestart;
+
+	iPoint cameraPos;
 };
 
 #endif // __j1RENDER_H__

@@ -6,8 +6,6 @@
 #include "p2Point.h"
 #include "j1Module.h"
 
-// TODO 1: Create a struct for the map layer
-// ----------------------------------------------------
 struct MapLayer
 {
 	p2SString map_name;
@@ -31,7 +29,7 @@ struct MapLayer
 // ----------------------------------------------------
 struct TileSet
 {
-	//Create a method that receives a tile id and returns it's Rectfind the Rect associated with a specific tile id
+	//Method that receives a tile id and returns it's Rectfind the Rect associated with a specific tile id
 	SDL_Rect GetTileRect(int id) const;
 
 	p2SString			name;

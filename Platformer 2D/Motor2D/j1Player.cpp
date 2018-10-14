@@ -56,7 +56,8 @@ bool j1Player::Start()
 	}
 	
 	player1->playerCollider = App->collision->FindPlayer();
-	player1->playerNextFrameCol = App->collision->AddCollider({ player1->playerCollider->rect.x, player1->playerCollider->rect.y, player1->playerCollider->rect.w, player1->playerCollider->rect.h }, COLLIDER_PLAYERFUTURE, this);
+	player1->playerNextFrameCol = App->collision->AddCollider({ player1->playerCollider->rect.x, player1->playerCollider->rect.y, 
+								player1->playerCollider->rect.w, player1->playerCollider->rect.h }, COLLIDER_PLAYERFUTURE, this);
 
 	player1->currentAnimation = &player1->idle;
 	player1->jumpsLeft = 2;

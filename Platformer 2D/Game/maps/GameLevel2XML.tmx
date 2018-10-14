@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="75" tilewidth="16" tileheight="16" nextobjectid="78">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="75" tilewidth="16" tileheight="16" nextobjectid="90">
  <tileset firstgid="1" name="tilesetsv2" tilewidth="16" tileheight="16" tilecount="408" columns="24">
   <image source="tilesetsv2.png" width="384" height="284"/>
  </tileset>
@@ -15016,7 +15016,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <objectgroup name="Object Layer 1">
+ <objectgroup name="Collision">
   <object id="2" x="144" y="592" width="160" height="32">
    <properties>
     <property name="type" value="wall"/>
@@ -15277,5 +15277,30 @@
     <property name="type" value="wall"/>
    </properties>
   </object>
+  <object id="78" x="96" y="304" width="48" height="288">
+   <properties>
+    <property name="type" value="wall"/>
+   </properties>
+  </object>
+  <object id="81" x="200" y="499" width="32" height="42">
+   <properties>
+    <property name="type" value="player"/>
+   </properties>
+  </object>
+  <object id="82" x="368" y="672" width="224" height="64">
+   <properties>
+    <property name="type" value="death"/>
+   </properties>
+  </object>
+  <object id="85" x="848" y="816" width="464" height="48">
+   <properties>
+    <property name="type" value="death"/>
+   </properties>
+  </object>
+  <object id="87" x="1824" y="272" width="16" height="224"/>
+  <object id="88" x="1840" y="272" width="16" height="224"/>
+ </objectgroup>
+ <objectgroup name="Metadata" visible="0">
+  <object id="80" type="cameraStartingPoint" x="119" y="441"/>
  </objectgroup>
 </map>
