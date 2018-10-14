@@ -187,6 +187,9 @@ bool j1Player::PostUpdate()
 
 bool j1Player::CleanUp()
 {
+	App->tex->UnLoad(player1->playerTexture);
+	App->tex->UnLoad(player1->godmodeTexture);
+
 	player1->currentAnimation = nullptr;
 
 	delete player1;
