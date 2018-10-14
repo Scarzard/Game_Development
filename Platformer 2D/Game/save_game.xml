@@ -3,14 +3,14 @@
 	<input />
 	<window />
 	<textures />
-	<:anonymous />
+	<anonymous />
 	<audio />
 	<map />
 	<scene />
 	<player>
-		<position x="910" y="337" />
+		<position x="379" y="476" />
 	</player>
 	<renderer>
-		<camera x="1520" y="424" />
+		<camera x="458" y="702" />
 	</renderer>
 </game_state>

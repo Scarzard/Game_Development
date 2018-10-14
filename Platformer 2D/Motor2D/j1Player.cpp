@@ -432,6 +432,13 @@ void j1Player::OnCollision(Collider* collider1, Collider* collider2)
 					}
 
 				}
+				else
+				{
+					if (player1->speed.x < 0)
+						player1->speed.x += intersectCol.w;
+					else if (player1->speed.x > 0)
+						player1->speed.x -= intersectCol.w;
+				}
 			}
 		}
 	}
