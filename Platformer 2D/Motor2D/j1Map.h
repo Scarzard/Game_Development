@@ -57,7 +57,7 @@ struct ImageLayer
 	int				width;
 	int				height;
 	fPoint			position;
-	float			speed = 0.0f;
+	int				speed = 0;
 
 };
 

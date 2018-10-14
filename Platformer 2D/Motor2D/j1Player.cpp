@@ -146,13 +146,13 @@ bool j1Player::PostUpdate()
 	{
 		if (img->data->speed > 0)
 		{
-			if (player1->parallaxToLeft = true && App->render->camera.x > 200)
+			if (player1->parallaxToLeft = true)
 			{
-				img->data->position.x += img->data->speed;
+				img->data->position.x += player1->speed.x / img->data->speed;
 			}
 			else if (player1->parallaxToRight = true)
 			{
-				img->data->position.x -= img->data->speed;
+				img->data->position.x -= player1->speed.x / img->data->speed;
 			}
 
 		}
