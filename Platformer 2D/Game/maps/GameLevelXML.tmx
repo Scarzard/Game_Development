@@ -9,7 +9,7 @@
  <imagelayer name="ParallaxLayer" offsetx="-384" offsety="-64">
   <image source="middleground-no-fungus.png" width="5440" height="1760"/>
   <properties>
-   <property name="parallaxSpeed" type="float" value="1.5"/>
+   <property name="parallaxSpeed" type="float" value="2"/>
   </properties>
  </imagelayer>
  <layer name="Scenery" width="200" height="75" offsetx="26.5" offsety="17.75">

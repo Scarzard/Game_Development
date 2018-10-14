@@ -452,7 +452,7 @@ bool j1Map::LoadImageLayer(pugi::xml_node& node, ImageLayer* img)
 			p2SString attribute = property.attribute("name").as_string();
 			if (attribute == "parallaxSpeed")
 			{
-				img->speed = property.attribute("value").as_float();
+				img->speed = property.attribute("value").as_int();
 			}
 		}
 	}
