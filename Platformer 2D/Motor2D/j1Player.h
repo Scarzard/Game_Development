@@ -82,6 +82,7 @@ private:
 	void SetAnimations();
 	void SetSpeed();
 	void Move();
+	void ResetParallax();
 
 	bool CenterCameraOnPlayer();
 

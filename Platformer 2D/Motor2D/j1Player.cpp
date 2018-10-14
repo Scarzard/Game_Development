@@ -305,6 +305,7 @@ void j1Player::Respawn()
 	player1->playerCollider->SetPos(player1->position.x + player1->colliderOffset.x, player1->position.y + player1->colliderOffset.y);
 	player1->playerNextFrameCol->SetPos(player1->playerCollider->rect.x + player1->speed.x, player1->playerCollider->rect.y + player1->speed.y);
 	App->render->cameraRestart = true;
+	ResetParallax();
 
 	player1->alive = true;
 }
@@ -359,6 +360,19 @@ void j1Player::Move()
 {
 	player1->position.x += player1->speed.x;
 	player1->position.y += player1->speed.y;
+}
+
+void j1Player::ResetParallax()
+{
+	p2List_item<ImageLayer*>* img = nullptr;
+
+	if (!player1->alive)
+	{
+		for (img = App->map->data.image.start; img; img = img->next)
+		{
+			img->data->position.x = 0;
+		}
+	}
 }
 
 void j1Player::OnCollision(Collider* collider1, Collider* collider2)
