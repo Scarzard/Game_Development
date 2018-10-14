@@ -5,6 +5,14 @@
 
 struct SDL_Texture;
 
+struct levelToLoad
+{
+	const char * lvl1_name = "GameLevelXML.tmx";
+
+	const char * lvl2_name = "GameLevel2XML.tmx";
+
+};
+
 class j1Scene : public j1Module
 {
 public:
@@ -32,7 +40,11 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void LoadLevel(uint lvl = 0);
+
 private:
+	levelToLoad levelToLoad;
+
 };
 
 #endif // __j1SCENE_H__

@@ -61,6 +61,18 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x += 2;
 
+	//Start lvl 1
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		LoadLevel(1);
+	}
+
+	//Start lvl 2
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	{
+		LoadLevel(2);
+	}
+
 	//App->render->Blit(img, 0, 0);
 	App->map->Draw();
 
@@ -92,4 +104,15 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 
 	return true;
+}
+
+void j1Scene::LoadLevel(uint lvl)
+{
+	App->map->CleanUp();
+
+	if (lvl == 1)
+		App->map->Load(levelToLoad.lvl1_name);
+
+	else 
+		App->map->Load(levelToLoad.lvl2_name);
 }
