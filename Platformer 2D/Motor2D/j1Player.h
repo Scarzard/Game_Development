@@ -18,6 +18,7 @@ struct Player
 	int jumpStrength = 0;
 	int gravity = 0;
 	bool	alive	=	false;
+	bool	changingLevel = false;
 	bool	jumping =	false;
 	int		jumpsLeft = 0;
 
@@ -79,6 +80,7 @@ private:
 
 	void ApplyGravity();
 	void Respawn();
+	void RespawnInNewLevel();
 	void SetAnimations();
 	void SetSpeed();
 	void Move();

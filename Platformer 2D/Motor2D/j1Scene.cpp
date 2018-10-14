@@ -66,7 +66,7 @@ bool j1Scene::Update(float dt)
 	//Start lvl 1
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		App->player->player1->alive = false;
+		App->player->player1->changingLevel = true;
 
 		if (currentLevel != 1)
 			LoadLevel(1), currentLevel = 1;
@@ -79,10 +79,10 @@ bool j1Scene::Update(float dt)
 	//Start lvl 2
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
-		App->player->player1->alive = false;
+		App->player->player1->changingLevel = true;
 
 		if (currentLevel != 2)
-			LoadLevel(1), currentLevel = 2;
+			LoadLevel(2), currentLevel = 2;
 	}
 
 	//App->render->Blit(img, 0, 0);
@@ -126,6 +126,7 @@ void j1Scene::LoadLevel(uint lvl)
 	if (lvl == 1)
 		App->map->Load(levelToLoad.lvl1_name);
 
-	else 
+	else
 		App->map->Load(levelToLoad.lvl2_name);
+
 }
