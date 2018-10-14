@@ -59,6 +59,7 @@ bool j1Player::Start()
 	player1->playerNextFrameCol = App->collision->AddCollider({ player1->playerCollider->rect.x, player1->playerCollider->rect.y, player1->playerCollider->rect.w, player1->playerCollider->rect.h }, COLLIDER_PLAYERFUTURE, this);
 
 	player1->currentAnimation = &player1->idle;
+	player1->jumpsLeft = 2;
 
 	return true;
 }
@@ -66,12 +67,11 @@ bool j1Player::Start()
 bool j1Player::PreUpdate()
 {
 	if (player1->alive == true) {
+		SetSpeed();
 
-		player1->currentAnimation = &player1->idle;
-		player1->speed.x = 0;
-		HorizontalInput();
-		VerticalInput();
-		ApplyGravity();
+		player1->playerNextFrameCol->SetPos(player1->playerCollider->rect.x + player1->speed.x, player1->playerCollider->rect.y + player1->speed.y);
+		if (player1->jumping == false)
+			player1->jumpsLeft = 2;
 	}
 	return true;
 }
@@ -80,18 +80,54 @@ bool j1Player::PreUpdate()
 bool j1Player::Update(float dt)
 {
 	//Player controls
-	if (player1->alive == true) {
-
-		JumpAnimations();
-
+	if (player1->alive == true) 
+	{
 		CenterCameraOnPlayer();
 
-		player1->position.x += player1->speed.x;
-		player1->position.y += player1->speed.y;
+		//Check Horizontal Movement
+		//Right
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+			player1->facingLeft = false;
 
-		UpdateColliders();
+		//Left
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+			player1->facingLeft = true;
+		//---------------------------
 
+		//Prevent animations from glitching
+		if (player1->speed.x > 0)
+			player1->facingLeft = false;
+		if (player1->speed.x < 0)
+			player1->facingLeft = true;
+		//---------------------------------
+
+		//Check Jump ----------------------
+		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && player1->jumpsLeft != 0)
+		{
+			player1->jumpsLeft--;
+			player1->jumping = true;
+		}
+		if (player1->jumpsLeft == 2 && player1->speed.y > 0)
+			player1->jumpsLeft--;
+		//---------------------------------
+
+		// Set the correct animation for current movement
+		SetAnimations();
+
+		// Move player as of its current speed
+		Move();
+
+		// Update present collider
+		player1->playerCollider->SetPos(player1->position.x + player1->colliderOffset.x, player1->position.y + player1->colliderOffset.y);
+
+		// Blit player
+		if (player1->facingLeft)
+			App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame(), SDL_FLIP_NONE);
+
+		if (!player1->facingLeft)
+			App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame(), SDL_FLIP_HORIZONTAL);
 	}
+
 	else if (!player1->alive)
 	{
 		Respawn();
@@ -103,12 +139,6 @@ bool j1Player::Update(float dt)
 
 bool j1Player::PostUpdate()
 {
-	if (player1->facingLeft)
-		App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame(), SDL_FLIP_NONE);
-
-	if (!player1->facingLeft)
-		App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame(), SDL_FLIP_HORIZONTAL);
-
 	p2List_item<ImageLayer*>* img = nullptr;
 
 	for (img = App->map->data.image.start; img; img = img->next)
@@ -126,12 +156,8 @@ bool j1Player::PostUpdate()
 
 		}
 	}
-
-
 	return true;
 }
-
-
 
 bool j1Player::CleanUp()
 {
@@ -243,50 +269,12 @@ void j1Player::LoadAnimations()
 	}
 }
 
-void j1Player::HorizontalInput()
-{
-	// Check horizontal movement
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		player1->currentAnimation = &player1->idle;
-
-	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{
-		player1->speed.x = player1->playerSpeed;
-		player1->currentAnimation = &player1->run;
-		player1->facingLeft = false;
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
-		player1->speed.x = -player1->playerSpeed;
-		player1->currentAnimation = &player1->run;
-		player1->facingLeft = true;
-	}
-}
-
-void j1Player::VerticalInput()
-{
-	// Check vertical movement
-	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
-	{
-		player1->speed.y = -player1->jumpStrength;
-		player1->jump.Reset();
-		player1->jumping = true;
-	}
-
-	if (player1->jumping)
-		player1->currentAnimation = &player1->jump;
-}
-
-void j1Player::UpdateColliders()
-{
-	player1->playerCollider->SetPos(player1->position.x + player1->colliderOffset.x, player1->position.y + player1->colliderOffset.y);
-	player1->playerNextFrameCol->SetPos(player1->playerCollider->rect.x + player1->speed.x, player1->playerCollider->rect.y + player1->speed.y);
-}
-
 void j1Player::ApplyGravity()
 {
 	if (player1->speed.y < 9)
-	player1->speed.y += player1->gravity;
+		player1->speed.y += player1->gravity;
+	else if (player1->speed.y > 9)
+		player1->speed.y = player1->gravity;
 }
 
 void j1Player::Respawn()
@@ -294,14 +282,30 @@ void j1Player::Respawn()
 	player1->speed.SetToZero();
 	player1->position.x = App->map->data.startingPointX;
 	player1->position.y = App->map->data.startingPointY;
-	UpdateColliders();
+	player1->playerCollider->SetPos(player1->position.x + player1->colliderOffset.x, player1->position.y + player1->colliderOffset.y);
+	player1->playerNextFrameCol->SetPos(player1->playerCollider->rect.x + player1->speed.x, player1->playerCollider->rect.y + player1->speed.y);
 	App->render->cameraRestart = true;
 
 	player1->alive = true;
 }
 
-void j1Player::JumpAnimations()
+void j1Player::SetAnimations()
 {
+	// Reset to idle if no input is received
+	player1->currentAnimation = &player1->idle;
+
+	// Run if moving on the x axis
+	if (player1->speed.x != 0)
+		player1->currentAnimation = &player1->run;
+
+	// Idle if A and D are pressed simultaneously
+	if (player1->speed.x == 0)
+		player1->currentAnimation = &player1->idle;
+
+	// Set jumping animations
+	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+		player1->jump.Reset();
+
 	if (player1->jumping)
 	{
 		if (player1->speed.y > 0)
@@ -309,6 +313,32 @@ void j1Player::JumpAnimations()
 		else if (player1->speed.y < 0)
 			player1->currentAnimation = &player1->jump;
 	}
+}
+
+void j1Player::SetSpeed()
+{
+	// Apply gravity in each frame
+	ApplyGravity();
+
+	// Check for horizontal movement
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
+		player1->speed.x = player1->playerSpeed;
+
+	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
+		player1->speed.x = -player1->playerSpeed;
+
+	else
+		player1->speed.x = 0;
+
+	// Check for jumps
+	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && player1->jumpsLeft > 0)
+		player1->speed.y = -player1->jumpStrength;
+}
+
+void j1Player::Move()
+{
+	player1->position.x += player1->speed.x;
+	player1->position.y += player1->speed.y;
 }
 
 void j1Player::OnCollision(Collider* collider1, Collider* collider2)
@@ -329,7 +359,7 @@ void j1Player::OnCollision(Collider* collider1, Collider* collider2)
 						player1->speed.y -= intersectCol.h, player1->jumping = false;
 
 					else if (player1->speed.x < 0)
-						if (intersectCol.h <= intersectCol.w)
+						if (intersectCol.h >= intersectCol.w)
 						{
 							if (collider1->rect.x <= collider2->rect.x + collider2->rect.w)
 								player1->speed.y -= intersectCol.h, player1->jumping = false;
@@ -340,7 +370,7 @@ void j1Player::OnCollision(Collider* collider1, Collider* collider2)
 							player1->speed.y -= intersectCol.h, player1->jumping = false;
 
 					else if (player1->speed.x > 0)
-						if (intersectCol.h <= intersectCol.w)
+						if (intersectCol.h >= intersectCol.w)
 						{
 							if (collider1->rect.x + collider1->rect.w <= collider2->rect.x)
 								player1->speed.y -= intersectCol.h, player1->jumping = false;
@@ -351,24 +381,56 @@ void j1Player::OnCollision(Collider* collider1, Collider* collider2)
 							player1->speed.y -= intersectCol.h, player1->jumping = false;
 
 				}
+				else
+				{
+					if (player1->speed.x < 0)
+						player1->speed.x += intersectCol.w;
+					else if (player1->speed.x > 0)
+						player1->speed.x -= intersectCol.w;
+				}
 			}
 
 			else if (player1->speed.y == 0) // If player is not moving vertically
 			{
 				if (player1->speed.x > 0)
-				{
-					if (collider1->rect.x < collider2->rect.x)
-					{
-						player1->speed.x -= intersectCol.w;
-					}
-				}
+					player1->speed.x -= intersectCol.w;
+			
+				if (player1->speed.x < 0)
+					player1->speed.x += intersectCol.w;
 			}
 
-			else if (player1->speed.y > 0) // If player is moving up
+			else if (player1->speed.y < 0) // If player is moving up
 			{
 				if (collider1->rect.y + collider1->rect.h > collider2->rect.y + collider2->rect.h) // Checking if player is colliding from below
 				{
-					player1->speed.y += intersectCol.h;
+					if (player1->speed.x == 0)
+						player1->speed.y += intersectCol.h;
+
+					else if (player1->speed.x < 0)
+					{
+						if (intersectCol.h >= intersectCol.w)
+						{
+							if (collider1->rect.x <= collider2->rect.x + collider2->rect.w)
+								player1->speed.y += intersectCol.h;
+							else
+								player1->speed.x += intersectCol.w;
+						}
+						else
+							player1->speed.y += intersectCol.h;
+					}
+					else if (player1->speed.x > 0)
+					{
+						if (intersectCol.h >= intersectCol.w)
+						{
+							if (collider1->rect.x + collider1->rect.w >= collider2->rect.x)
+								player1->speed.y += intersectCol.h;
+							else
+								player1->speed.x -= intersectCol.w;
+						}
+						else
+							player1->speed.y += intersectCol.h;
+					}
+
 				}
 			}
 		}

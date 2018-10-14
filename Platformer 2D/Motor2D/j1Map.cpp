@@ -32,8 +32,6 @@ void j1Map::Draw()
 	if(map_loaded == false)
 		return;
 
-	// TODO 5: Prepare the loop to draw all tilesets + Blit
-
 	p2List_item<ImageLayer*>* image_list;
 	for (image_list = data.image.start; image_list; image_list = image_list->next)
 	{

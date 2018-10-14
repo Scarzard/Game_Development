@@ -19,6 +19,7 @@ struct Player
 	int gravity = 0;
 	bool	alive	=	false;
 	bool	jumping =	false;
+	int		jumpsLeft = 0;
 
 	bool	facingLeft	=	false;
 	bool playerMoving = false;
@@ -73,13 +74,11 @@ public:
 
 private:
 
-	void HorizontalInput();
-	void VerticalInput();
-	void UpdateColliders();
 	void ApplyGravity();
 	void Respawn();
-	void JumpAnimations();
+	void SetAnimations();
 	void SetSpeed();
+	void Move();
 
 	bool CenterCameraOnPlayer();
 
