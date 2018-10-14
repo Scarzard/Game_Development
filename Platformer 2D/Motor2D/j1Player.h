@@ -26,6 +26,8 @@ struct Player
 
 	bool parallaxToRight = false;
 	bool parallaxToLeft = false;
+
+	bool godmode = false;
 	
 	Collider*		playerCollider		= nullptr;
 	Collider*		playerNextFrameCol	= nullptr;
@@ -33,6 +35,7 @@ struct Player
 	iPoint colliderOffset = { 9,6 };
 
 	SDL_Texture*	playerTexture		= nullptr;
+	SDL_Texture*	godmodeTexture		= nullptr;
 
 	Animation* currentAnimation = nullptr;
 

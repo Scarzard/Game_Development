@@ -45,6 +45,7 @@ bool j1Player::Start()
 {
 	
 	player1->playerTexture = App->tex->Load("textures/main_character.png");
+	player1->godmodeTexture = App->tex->Load("textures/main_character_godmode.png");
 
 	pugi::xml_parse_result result = storedAnims.load_file("textures/animations.tmx");
 	if (result == NULL)
@@ -83,6 +84,9 @@ bool j1Player::Update(float dt)
 	//Player controls
 	if (player1->alive == true) 
 	{
+		if (player1->godmode)
+			player1->jumpsLeft = 2;
+
 		CenterCameraOnPlayer();
 
 		//Check Horizontal Movement
@@ -112,6 +116,10 @@ bool j1Player::Update(float dt)
 			player1->jumpsLeft--;
 		//---------------------------------
 
+		//Check godmode debug -------------
+		if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+			player1->godmode = !player1->godmode;
+
 		// Set the correct animation for current movement
 		SetAnimations();
 
@@ -123,10 +131,21 @@ bool j1Player::Update(float dt)
 
 		// Blit player
 		if (player1->facingLeft)
-			App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame(), SDL_FLIP_NONE);
+		{
+			if (!player1->godmode)
+				App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame(), SDL_FLIP_NONE);
+			else if (player1->godmode)
+				App->render->Blit(player1->godmodeTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame(), SDL_FLIP_NONE);
+		}
 
-		if (!player1->facingLeft)
-			App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame(), SDL_FLIP_HORIZONTAL);
+		else if (!player1->facingLeft)
+		{
+			if (!player1->godmode)
+				App->render->Blit(player1->playerTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame(), SDL_FLIP_HORIZONTAL);
+			else if (player1->godmode)
+				App->render->Blit(player1->godmodeTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame(), SDL_FLIP_HORIZONTAL);
+		}
+			
 	}
 
 	else if (!player1->alive)
@@ -448,7 +467,106 @@ void j1Player::OnCollision(Collider* collider1, Collider* collider2)
 
 	if (collider1->type == COLLIDER_PLAYERFUTURE && collider2->type == COLLIDER_DEATH)
 	{
+		if (!player1->godmode)
 		player1->alive = false;
+
+		else if (player1->godmode)
+		{
+			SDL_Rect intersectCol;
+			if (SDL_IntersectRect(&collider1->rect, &collider2->rect, &intersectCol));
+			//future player collider and a certain wall collider have collided
+			{
+				if (player1->speed.y > 0) // If player is falling
+				{
+					if (collider1->rect.y < collider2->rect.y) // Checking if player is colliding from above
+					{
+						if (player1->speed.x == 0)
+							player1->speed.y -= intersectCol.h, player1->jumping = false;
+
+						else if (player1->speed.x < 0)
+							if (intersectCol.h >= intersectCol.w)
+							{
+								if (collider1->rect.x <= collider2->rect.x + collider2->rect.w)
+									player1->speed.y -= intersectCol.h, player1->jumping = false;
+								else
+									player1->speed.x += intersectCol.w;
+							}
+							else
+								player1->speed.y -= intersectCol.h, player1->jumping = false;
+
+						else if (player1->speed.x > 0)
+							if (intersectCol.h >= intersectCol.w)
+							{
+								if (collider1->rect.x + collider1->rect.w <= collider2->rect.x)
+									player1->speed.y -= intersectCol.h, player1->jumping = false;
+								else
+									player1->speed.x -= intersectCol.w;
+							}
+							else
+								player1->speed.y -= intersectCol.h, player1->jumping = false;
+
+					}
+					else
+					{
+						if (player1->speed.x < 0)
+							player1->speed.x += intersectCol.w;
+						else if (player1->speed.x > 0)
+							player1->speed.x -= intersectCol.w;
+					}
+				}
+
+				else if (player1->speed.y == 0) // If player is not moving vertically
+				{
+					if (player1->speed.x > 0)
+						player1->speed.x -= intersectCol.w;
+
+					if (player1->speed.x < 0)
+						player1->speed.x += intersectCol.w;
+				}
+
+				else if (player1->speed.y < 0) // If player is moving up
+				{
+					if (collider1->rect.y + collider1->rect.h > collider2->rect.y + collider2->rect.h) // Checking if player is colliding from below
+					{
+						if (player1->speed.x == 0)
+							player1->speed.y += intersectCol.h;
+
+						else if (player1->speed.x < 0)
+						{
+							if (intersectCol.h >= intersectCol.w)
+							{
+								if (collider1->rect.x <= collider2->rect.x + collider2->rect.w)
+									player1->speed.y += intersectCol.h;
+								else
+									player1->speed.x += intersectCol.w;
+							}
+							else
+								player1->speed.y += intersectCol.h;
+						}
+						else if (player1->speed.x > 0)
+						{
+							if (intersectCol.h >= intersectCol.w)
+							{
+								if (collider1->rect.x + collider1->rect.w >= collider2->rect.x)
+									player1->speed.y += intersectCol.h;
+								else
+									player1->speed.x -= intersectCol.w;
+							}
+							else
+								player1->speed.y += intersectCol.h;
+						}
+
+					}
+					else
+					{
+						if (player1->speed.x < 0)
+							player1->speed.x += intersectCol.w;
+						else if (player1->speed.x > 0)
+							player1->speed.x -= intersectCol.w;
+					}
+				}
+			}
+		}
 	}
 }
 
