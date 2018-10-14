@@ -43,7 +43,12 @@ public:
 	void LoadLevel(uint lvl = 0);
 
 private:
+
+public:
+
 	int currentLevel = 1;
+
+private:
 	levelToLoad levelToLoad;
 
 };

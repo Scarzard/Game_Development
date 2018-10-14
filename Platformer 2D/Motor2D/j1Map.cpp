@@ -140,12 +140,12 @@ bool j1Map::CleanUp()
 	p2List_item<Collider*>* collider_info;
 	collider_info = data.colliderList.start;
 
-	while (collider_info != NULL)
-	{
-		RELEASE(collider_info->data);
-		collider_info = collider_info->next;
-	}
-	data.colliderList.clear();
+	//while (collider_info != NULL)
+	//{
+	//	RELEASE(collider_info->data);
+	//	collider_info = collider_info->next;
+	//}
+	//data.colliderList.clear();
 
 	// Clean up the pugui tree
 	map_file.reset();

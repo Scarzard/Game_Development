@@ -9,6 +9,7 @@
 #include "j1Map.h"
 #include "j1Scene.h"
 #include "j1Player.h"
+#include "j1Collision.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -65,21 +66,23 @@ bool j1Scene::Update(float dt)
 	//Start lvl 1
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		if (currentLevel == 1)
-			App->player->player1->alive = false;
+		App->player->player1->alive = false;
 
-		else
+		if (currentLevel != 1)
 			LoadLevel(1), currentLevel = 1;
 	}
+
+	//Start from current level
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		App->player->player1->alive = false;
 
 	//Start lvl 2
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
-		if (currentLevel == 2)
-			App->player->player1->alive = false;
+		App->player->player1->alive = false;
 
-		else
-			LoadLevel(2), currentLevel = 2;
+		if (currentLevel != 2)
+			LoadLevel(1), currentLevel = 2;
 	}
 
 	//App->render->Blit(img, 0, 0);
@@ -117,6 +120,7 @@ bool j1Scene::CleanUp()
 
 void j1Scene::LoadLevel(uint lvl)
 {
+	App->collision->CleanUp();
 	App->map->CleanUp();
 
 	if (lvl == 1)
