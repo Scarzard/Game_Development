@@ -2,7 +2,7 @@
 
 <config>
   <app>
-    <title>Warped by ...</title>
+    <title>Warped by GroundZero</title>
     <organization>UPC</organization>
   </app>
 
@@ -29,8 +29,8 @@
   <player>
     <position x ="175" y ="350"/>
     <cameraStartPos x ="50" y ="350"/>
-    <playerSpeed value ="3"/>
-    <jumpStrength value ="15"/>
+    <playerSpeed value ="4"/>
+    <jumpStrength value ="11"/>
     <gravity value ="1"/>
     <alive value = "true"/>
   </player>
