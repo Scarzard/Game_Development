@@ -1,3 +1,4 @@
+
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Render.h"
@@ -152,18 +153,25 @@ void j1Collision::DebugDraw()
 		{
 		case COLLIDER_NONE: // white
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
+			break;
 		case COLLIDER_DEATH: // red
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
 		case COLLIDER_LEVELEND: // orange
 			App->render->DrawQuad(colliders[i]->rect, 255, 100, 100, alpha);
+			break;
 		case COLLIDER_SOLID_FLOOR: // blue
 			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
+			break;
 		case COLLIDER_PLAYER: // green
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
+			break;
 		case COLLIDER_PLAYERFUTURE: // dark green
 			App->render->DrawQuad(colliders[i]->rect, 0, 185, 0, alpha);
+			break;
 		case COLLIDER_PHASABLE_FLOOR: //light blue
 			App->render->DrawQuad(colliders[i]->rect, 125, 255, 255, alpha);
+			break;
 		}
 
 	}
