@@ -4,6 +4,7 @@
   <app>
     <title>Warped by GroundZero</title>
     <organization>UPC</organization>
+    <framerate framerate_cap="30"/>
   </app>
 
   <renderer>

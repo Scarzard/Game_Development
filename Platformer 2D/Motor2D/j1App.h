@@ -7,6 +7,8 @@
 
 // Modules
 class j1Window;
+class j1Timer;
+class j1PerfTimer;
 class j1Input;
 class j1Render;
 class j1Textures;
@@ -85,6 +87,8 @@ public:
 
 	// Modules
 	j1Window*			win;
+	j1Timer*			timer;
+	j1PerfTimer*		perfTimer;
 	j1Input*			input;
 	j1Render*			render;
 	j1Textures*			tex;
@@ -109,6 +113,9 @@ private:
 	bool				want_to_load;
 	p2SString			load_game;
 	mutable p2SString	save_game;
+
+	//Timer values
+	uint32				frame_cap = 0;
 };
 
 extern j1App* App; // No student is asking me about that ... odd :-S
