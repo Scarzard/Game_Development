@@ -3,6 +3,8 @@
 
 #include "p2List.h"
 #include "j1Module.h"
+#include "j1PerfTimer.h"
+#include "j1Timer.h"
 #include "PugiXml\src\pugixml.hpp"
 
 // Modules
@@ -118,6 +120,7 @@ private:
 
 	//Timer values
 	uint32				frame_cap = 0;
+	j1PerfTimer			perfectTimer;
 };
 
 extern j1App* App; // No student is asking me about that ... odd :-S

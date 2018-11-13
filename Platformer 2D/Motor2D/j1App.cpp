@@ -15,9 +15,13 @@
 #include "j1Player.h"
 #include "j1App.h"
 
+
+
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 {
+	PERF_START(perfectTimer);
+
 	frames = 0;
 	want_to_save = want_to_load = false;
 
@@ -49,6 +53,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(render);
 
 	save_game = load_game = "save_game.xml";
+
+	PERF_PEEK(perfectTimer);
 }
 
 // Destructor
@@ -75,6 +81,8 @@ void j1App::AddModule(j1Module* module)
 // Called before render is available
 bool j1App::Awake()
 {
+	PERF_START(perfectTimer);
+	
 	pugi::xml_document	config_file;
 	pugi::xml_node		config;
 	pugi::xml_node		app_config;
@@ -105,12 +113,16 @@ bool j1App::Awake()
 		}
 	}
 
+	PERF_PEEK(perfectTimer);
+
 	return ret;
 }
 
 // Called before the first frame
 bool j1App::Start()
 {
+	PERF_START(perfectTimer);
+
 	bool ret = true;
 	p2List_item<j1Module*>* item;
 	item = modules.start;
@@ -121,12 +133,15 @@ bool j1App::Start()
 		item = item->next;
 	}
 
+	PERF_PEEK(perfectTimer);
+
 	return ret;
 }
 
 // Called each loop iteration
 bool j1App::Update()
 {
+	PERF_START(perfectTimer);
 	bool ret = true;
 	PrepareUpdate();
 
@@ -143,6 +158,7 @@ bool j1App::Update()
 		ret = PostUpdate();
 
 	FinishUpdate();
+	PERF_PEEK(perfectTimer);
 	return ret;
 }
 
@@ -164,6 +180,7 @@ pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
 // ---------------------------------------------
 void j1App::PrepareUpdate()
 {
+	perfectTimer.Start();
 }
 
 // ---------------------------------------------
@@ -223,6 +240,8 @@ bool j1App::DoUpdate()
 // Call modules after each loop iteration
 bool j1App::PostUpdate()
 {
+	PERF_START(perfectTimer);
+
 	bool ret = true;
 	p2List_item<j1Module*>* item;
 	j1Module* pModule = NULL;
@@ -238,6 +257,7 @@ bool j1App::PostUpdate()
 		ret = item->data->PostUpdate();
 	}
 
+	PERF_PEEK(perfectTimer);
 	return ret;
 }
 
