@@ -179,9 +179,19 @@ void j1Scene::LoadLevel(uint lvl)
 	App->map->CleanUp();
 
 	if (lvl == 1)
+	{
 		App->map->Load(levelToLoad.lvl1_name);
+	}
 
 	else
 		App->map->Load(levelToLoad.lvl2_name);
+
+	int w, h;
+	uchar* data = NULL;
+	if (App->map->CreateWalkabilityMap(w, h, &data))
+	{
+		App->pathfinding->SetMap(w, h, data);
+	}
+	RELEASE_ARRAY(data);
 
 }
