@@ -168,16 +168,11 @@ int PathNode::CalculateF(const iPoint& destination)
 
 int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
-	// TODO 1: if origin or destination are not walkable, return -1
-	if (IsWalkable(origin) == false || IsWalkable(destination) == false)
-	{
-		return -1;
-	}
+	//Origin or destination are not walkable, return -1
+	if (IsWalkable(origin) == false || IsWalkable(destination) == false) { return -1; }
 
-	// TODO 2: Create two lists: open, close
-	// Add the origin tile to open
-	// Iterate while we have tile in the open list
-
+	//Create 3 lists, adds origin to open list. Iterate while we have tiles
+	//in open list
 	PathList open, close, neighbors;
 	p2List_item<PathNode>* node;
 
@@ -186,22 +181,21 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 
 	while (open.list.count() > 0)
 	{
-	// TODO 3: Move the lowest score cell from open list to the closed list
-
+		//Moves the  lowestScoreCell from open to close list
 		node = open.GetNodeLowestScore();
 		p2List_item<PathNode>* lowestScoreCell = close.list.add(node->data);
 		open.list.del(node);
 
-	// TODO 4: If we just added the destination, we are done!
-	// Backtrack to create the final path
 	
+	// Backtrack to create the final path
+		//When we add the destination of the pathfinding, we are done.
 		if (lowestScoreCell->data.pos == destination)
 		{
 			last_path.Clear();
 			
 			const PathNode* breadcrumbs = &node->data;
 
-			//Go back through breadcrumbs until it reaches the origin
+			//Go back through breadcrumbs until it reaches the origin aka. backtracking
 			while (breadcrumbs->pos != origin)
 			{
 				last_path.PushBack(breadcrumbs->pos);
@@ -214,11 +208,11 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 			return last_path.Count();
 		}
 
-	// TODO 5: Fill a list of all adjancent nodes
+		//Fills a list of adjacent nodes
 		neighbors.list.clear(); 
 		lowestScoreCell->data.FindWalkableAdjacents(neighbors);
 
-	// TODO 6: Iterate adjancent nodes
+		//Iterates adjacent nodes
 		p2List_item<PathNode>* openNeightbors = neighbors.list.start;
 		for (; openNeightbors; openNeightbors = openNeightbors->next)
 		{
@@ -231,13 +225,12 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 				// If it is NOT found, calculate its F and add it to the open list
 				if (aux == NULL) 
 				{
-					
 					openNeightbors->data.CalculateF(destination);
 					open.list.add(openNeightbors->data);
 				}
+				// If it is already in the open list, check if it is a better path (compare G)
 				else if (aux->data.g > openNeightbors->data.g)
 				{
-					// If it is already in the open list, check if it is a better path (compare G)
 					// If it is a better path, Update the parent
 					aux->data.parent = openNeightbors->data.parent;
 					aux->data.CalculateF(destination);
@@ -245,7 +238,5 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 			}
 		}
 	}
-
-	return -1;
 }
 
