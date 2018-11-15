@@ -51,6 +51,8 @@ public:
 private:
 	levelToLoad levelToLoad;
 
+	SDL_Texture* debug_tex;
+
 };
 
 #endif // __j1SCENE_H__
