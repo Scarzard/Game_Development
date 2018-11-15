@@ -119,8 +119,8 @@ iPoint j1Map::WorldToMap(int x, int y) const
 
 	if (data.type == MAPTYPE_ORTHOGONAL)
 	{
-		ret.x = x / data.tile_width;
-		ret.y = y / data.tile_height;
+		ret.x = -x / data.tile_width;
+		ret.y = -y / data.tile_height;
 	}
 	else if (data.type == MAPTYPE_ISOMETRIC)
 	{
@@ -666,7 +666,7 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 	{
 		MapLayer* layer = item->data;
 
-		if (layer->properties.Get("Navigation", 0) == 0)
+		if (layer->properties.Get("Navigation", 0) == 1)
 			continue;
 
 		uchar* map = new uchar[layer->width*layer->height];
