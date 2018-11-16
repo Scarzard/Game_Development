@@ -170,6 +170,8 @@ bool j1Player::Update(float dt)
 
 bool j1Player::PostUpdate()
 {
+	BROFILER_CATEGORY("Player_PostUpdate", Profiler::Color::Crimson)
+
 	p2List_item<ImageLayer*>* img = nullptr;
 
 	for (img = App->map->data.image.start; img; img = img->next)

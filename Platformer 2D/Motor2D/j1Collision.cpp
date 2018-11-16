@@ -127,6 +127,7 @@ bool j1Collision::Update(float dt)
 
 bool j1Collision::PostUpdate()
 {
+	BROFILER_CATEGORY("Collision_PostUpdate", Profiler::Color::Crimson)
 
 	DebugDraw();
 

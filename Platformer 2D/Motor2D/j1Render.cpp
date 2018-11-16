@@ -81,6 +81,8 @@ bool j1Render::Update(float dt)
 
 bool j1Render::PostUpdate()
 {
+	BROFILER_CATEGORY("Renderer_PostUpdate", Profiler::Color::Crimson)
+
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
 	return true;
