@@ -98,7 +98,14 @@ bool j1App::Awake()
 		app_config = config.child("app");
 		title.create(app_config.child("title").child_value());
 		organization.create(app_config.child("organization").child_value());
-		frame_cap = app_config.child("framerate").attribute("framerate_cap").as_uint();
+
+
+		int cap = app_config.attribute("framerate_cap").as_int(-1);
+
+		if (cap > 0)
+		{
+			capped_ms = 1000 / cap;
+		}
 	}
 
 	if(ret == true)
@@ -180,7 +187,11 @@ pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
 // ---------------------------------------------
 void j1App::PrepareUpdate()
 {
-	perfectTimer.Start();
+	frameCounter++;
+	last_sec_frame_count++;
+
+	dt = frameDuration.ReadSec();
+	frameDuration.Start();
 }
 
 // ---------------------------------------------
@@ -191,6 +202,32 @@ void j1App::FinishUpdate()
 
 	if(want_to_load == true)
 		LoadGameNow();
+
+	// Framerate calculations --
+
+	if (last_sec_frame_time.Read() > 1000)
+	{
+		last_sec_frame_time.Start();
+		prev_last_sec_frame_count = last_sec_frame_count;
+		last_sec_frame_count = 0;
+	}
+
+	float avg_fps = float(frameCounter) / timeToStart.ReadSec();
+	float seconds_since_startup = timeToStart.ReadSec();
+	uint32 last_frame_ms = frameDuration.Read();
+	uint32 frames_on_last_update = prev_last_sec_frame_count;
+
+	static char title[256];
+	sprintf_s(title, 256, "Warped: FPS: %d / AverageFPS: %f / LastFrameMS: %d / FramerateCap: On", frames_on_last_update, avg_fps, last_frame_ms);
+	App->win->SetTitle(title);
+
+	if (capped_ms > 0 && last_frame_ms < capped_ms)
+	{
+		j1PerfTimer t;
+		SDL_Delay(capped_ms - last_frame_ms);
+		LOG("We waited for %d milliseconds and got back in %f", capped_ms - last_frame_ms, t.ReadMs());
+	}
+	
 }
 
 // Call modules before each loop iteration
