@@ -14,6 +14,7 @@
 #include "j1Collision.h"
 #include "j1Player.h"
 #include "j1App.h"
+#include "Brofiler/Brofiler.h"
 
 
 
@@ -148,6 +149,8 @@ bool j1App::Start()
 // Called each loop iteration
 bool j1App::Update()
 {
+	BROFILER_CATEGORY("App_Update", Profiler::Color::Orchid)
+
 	PERF_START(perfectTimer);
 	bool ret = true;
 	PrepareUpdate();
@@ -233,6 +236,8 @@ void j1App::FinishUpdate()
 // Call modules before each loop iteration
 bool j1App::PreUpdate()
 {
+	BROFILER_CATEGORY("App_PreUpdate", Profiler::Color::Aquamarine)
+
 	bool ret = true;
 	p2List_item<j1Module*>* item;
 	item = modules.start;

@@ -4,6 +4,7 @@
 #include "j1Window.h"
 #include "j1Render.h"
 #include "j1Map.h"
+#include "Brofiler/Brofiler.h"
 
 #define VSYNC true
 
@@ -64,12 +65,15 @@ bool j1Render::Start()
 // Called each loop iteration
 bool j1Render::PreUpdate()
 {
+	BROFILER_CATEGORY("Renderer_PreUpdate", Profiler::Color::Aquamarine)
 	SDL_RenderClear(renderer);
 	return true;
 }
 
 bool j1Render::Update(float dt)
 {
+	BROFILER_CATEGORY("Renderer_Update", Profiler::Color::Orchid)
+
 	if (cameraRestart)
 		ResetCamera();
 	return true;

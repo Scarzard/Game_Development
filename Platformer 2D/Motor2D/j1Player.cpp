@@ -10,6 +10,7 @@
 #include "j1Input.h"
 #include "j1Collision.h"
 #include "j1Scene.h"
+#include "Brofiler/Brofiler.h"
 #include <math.h>
 
 
@@ -69,6 +70,8 @@ bool j1Player::Start()
 
 bool j1Player::PreUpdate()
 {
+	BROFILER_CATEGORY("Player_PreUpdate", Profiler::Color::Aquamarine)
+		
 	if (player1->alive == true) {
 		SetSpeed();
 
@@ -82,6 +85,8 @@ bool j1Player::PreUpdate()
 
 bool j1Player::Update(float dt)
 {
+	BROFILER_CATEGORY("Player_Update", Profiler::Color::Orchid)
+
 	//Player controls
 	if (player1->alive == true) 
 	{
