@@ -14,6 +14,7 @@ struct Player
 {
 	fPoint position = { 0,0 };
 	fPoint speed = { 0,0 };
+	fPoint normalizedSpeed = { 0,0 };
 	int playerSpeed = 0;
 	int jumpStrength = 0;
 	int gravity = 0;

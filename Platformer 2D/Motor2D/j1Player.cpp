@@ -28,8 +28,6 @@ bool j1Player::Awake(pugi::xml_node &config)
 {
 	player1 = new Player;
 
-	
-	//DOESNT SET THE VALUES FOR THE VARIABLES. NOW ITS HARDCODED. NEED A FIX
 	player1->alive = config.child("alive").attribute("value").as_bool();
 
 	player1->position.x = config.child("position").attribute("x").as_int();
@@ -74,6 +72,9 @@ bool j1Player::PreUpdate()
 		
 	if (player1->alive == true) {
 		SetSpeed();
+
+		player1->normalizedSpeed.x = player1->speed.x * player1->dtPlayer;
+		player1->normalizedSpeed.y = player1->speed.y * player1->dtPlayer;
 
 		player1->playerNextFrameCol->SetPos(player1->playerCollider->rect.x + player1->speed.x, player1->playerCollider->rect.y + player1->speed.y);
 		if (player1->jumping == false)
@@ -380,10 +381,10 @@ void j1Player::SetSpeed()
 
 	// Check for horizontal movement
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
-		player1->speed.x = player1->playerSpeed * player1->dtPlayer;
+		player1->speed.x = player1->playerSpeed;
 
 	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
-		player1->speed.x = -player1->playerSpeed * player1->dtPlayer;
+		player1->speed.x = -player1->playerSpeed;
 
 	else
 		player1->speed.x = 0;
