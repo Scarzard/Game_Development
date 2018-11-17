@@ -128,6 +128,10 @@ bool j1Scene::Update(float dt)
 			App->player->player1->alive = false;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	{
+		App->framerate_capped = !App->framerate_capped;
+	}
 	App->map->Draw();
 
 	int x, y;

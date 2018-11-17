@@ -102,6 +102,8 @@ public:
 	j1Player*			player;
 	j1PathFinding*		pathfinding;
 
+	bool				framerate_capped = true;
+
 private:
 
 	p2List<j1Module*>	modules;
@@ -118,7 +120,8 @@ private:
 	p2SString			load_game;
 	mutable p2SString	save_game;
 
-	//Timer values//mine
+	//Timer values
+	
 	uint32				frameCap = 0;
 
 	j1PerfTimer			perfectTimer;

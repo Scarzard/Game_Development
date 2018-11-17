@@ -100,13 +100,7 @@ bool j1App::Awake()
 		title.create(app_config.child("title").child_value());
 		organization.create(app_config.child("organization").child_value());
 
-
-		int cap = app_config.attribute("framerate_cap").as_int(-1);
-
-		if (cap > 0)
-		{
-			capped_ms = 1000 / cap;
-		}
+		frameCap = config.child("app").attribute("framerate_cap").as_uint();
 	}
 
 	if(ret == true)
@@ -194,6 +188,8 @@ void j1App::PrepareUpdate()
 	last_sec_frame_count++;
 
 	dt = frameDuration.ReadSec();
+	if (dt > (float)frameCap / 1000)
+		dt = (float)frameCap / 1000;
 	frameDuration.Start();
 }
 
@@ -221,15 +217,26 @@ void j1App::FinishUpdate()
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
 	static char title[256];
-	sprintf_s(title, 256, "Warped: FPS: %d / AverageFPS: %f / LastFrameMS: %d / FramerateCap: On", frames_on_last_update, avg_fps, last_frame_ms);
-	App->win->SetTitle(title);
-
-	if (capped_ms > 0 && last_frame_ms < capped_ms)
-	{
-		j1PerfTimer t;
-		SDL_Delay(capped_ms - last_frame_ms);
-		LOG("We waited for %d milliseconds and got back in %f", capped_ms - last_frame_ms, t.ReadMs());
+	if(framerate_capped)
+	{ 
+		sprintf_s(title, 256, "Warped: FPS: %d / AverageFPS: %f / LastFrameMS: %d / FramerateCap: ON", frames_on_last_update, avg_fps, last_frame_ms);
+		App->win->SetTitle(title);
 	}
+	else if(!framerate_capped)
+	{
+		sprintf_s(title, 256, "Warped: FPS: %d / AverageFPS: %f / LastFrameMS: %d / FramerateCap: OFF", frames_on_last_update, avg_fps, last_frame_ms);
+		App->win->SetTitle(title);
+	}
+
+	float timeToWait = (1000 / frameCap) - last_frame_ms;
+
+	if (float timeToWait = (1000 / frameCap))
+	{
+		timeToWait = (1000 / frameCap);
+	}
+
+	if(framerate_capped)
+		SDL_Delay(timeToWait);
 	
 }
 
