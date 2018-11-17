@@ -310,9 +310,9 @@ void j1Player::LoadAnimations()
 void j1Player::ApplyGravity()
 {
 	if (player1->speed.y < 9)
-		player1->speed.y += player1->gravity * player1->dtPlayer;
+		player1->speed.y += player1->gravity;
 	else if (player1->speed.y > 9)
-		player1->speed.y = player1->gravity * player1->dtPlayer;
+		player1->speed.y = player1->gravity;
 }
 
 void j1Player::Respawn()
@@ -391,13 +391,13 @@ void j1Player::SetSpeed()
 
 	// Check for jumps
 	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && player1->jumpsLeft > 0)
-		player1->speed.y = -player1->jumpStrength * player1->dtPlayer;
+		player1->speed.y = -player1->jumpStrength;
 }
 
 void j1Player::Move()
 {
-	player1->position.x += player1->speed.x * player1->dtPlayer;
-	player1->position.y += player1->speed.y * player1->dtPlayer;
+	player1->position.x += player1->speed.x;
+	player1->position.y += player1->speed.y;
 }
 
 void j1Player::ResetParallax()
