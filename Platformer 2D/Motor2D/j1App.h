@@ -108,7 +108,7 @@ private:
 
 	p2List<j1Module*>	modules;
 	uint				frames;
-	float				dt;
+	float				dt = 0.0f;
 	int					argc;
 	char**				args;
 

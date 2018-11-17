@@ -12,8 +12,8 @@ struct Collider;
 
 struct Player
 {
-	iPoint position = { 0,0 };
-	iPoint speed = { 0,0 };
+	fPoint position = { 0,0 };
+	fPoint speed = { 0,0 };
 	int playerSpeed = 0;
 	int jumpStrength = 0;
 	int gravity = 0;
@@ -29,6 +29,7 @@ struct Player
 	bool parallaxToLeft = false;
 
 	bool godmode = false;
+	float dtPlayer = 0.0f;
 	
 	Collider*		playerCollider		= nullptr;
 	Collider*		playerNextFrameCol	= nullptr;

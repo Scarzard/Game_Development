@@ -87,7 +87,9 @@ bool j1Player::Update(float dt)
 {
 	BROFILER_CATEGORY("Player_Update", Profiler::Color::Orchid)
 
-	//Player controls
+		dt = player1->dtPlayer;
+
+		//Player controls
 	if (player1->alive == true) 
 	{
 		if (player1->godmode)
@@ -307,9 +309,9 @@ void j1Player::LoadAnimations()
 void j1Player::ApplyGravity()
 {
 	if (player1->speed.y < 9)
-		player1->speed.y += player1->gravity;
+		player1->speed.y += player1->gravity * player1->dtPlayer;
 	else if (player1->speed.y > 9)
-		player1->speed.y = player1->gravity;
+		player1->speed.y = player1->gravity * player1->dtPlayer;
 }
 
 void j1Player::Respawn()
@@ -378,23 +380,23 @@ void j1Player::SetSpeed()
 
 	// Check for horizontal movement
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
-		player1->speed.x = player1->playerSpeed;
+		player1->speed.x = player1->playerSpeed * player1->dtPlayer;
 
 	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
-		player1->speed.x = -player1->playerSpeed;
+		player1->speed.x = -player1->playerSpeed * player1->dtPlayer;
 
 	else
 		player1->speed.x = 0;
 
 	// Check for jumps
 	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && player1->jumpsLeft > 0)
-		player1->speed.y = -player1->jumpStrength;
+		player1->speed.y = -player1->jumpStrength * player1->dtPlayer;
 }
 
 void j1Player::Move()
 {
-	player1->position.x += player1->speed.x;
-	player1->position.y += player1->speed.y;
+	player1->position.x += player1->speed.x * player1->dtPlayer;
+	player1->position.y += player1->speed.y * player1->dtPlayer;
 }
 
 void j1Player::ResetParallax()

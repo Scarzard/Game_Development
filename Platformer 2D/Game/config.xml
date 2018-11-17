@@ -30,9 +30,9 @@
   <player>
     <position x ="175" y ="350"/>
     <cameraStartPos x ="50" y ="350"/>
-    <playerSpeed value ="4"/>
-    <jumpStrength value ="11"/>
-    <gravity value ="1"/>
+    <playerSpeed value ="40"/>
+    <jumpStrength value ="110"/>
+    <gravity value ="10"/>
     <alive value = "true"/>
   </player>
 
