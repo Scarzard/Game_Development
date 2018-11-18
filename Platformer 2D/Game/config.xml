@@ -29,7 +29,8 @@
 
   <player>
     <position x ="175" y ="350"/>
-    <cameraStartPos x ="50" y ="350"/>
+    <cameraStartPos1 x ="100" y ="450"/>
+    <cameraStartPos2 x ="115" y ="850"/>
     <playerSpeed value ="4"/>
     <jumpStrength value ="11"/>
     <gravity value ="1"/>

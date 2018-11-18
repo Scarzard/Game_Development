@@ -4,6 +4,8 @@
 #include "j1Window.h"
 #include "j1Render.h"
 #include "j1Map.h"
+#include "j1Player.h"
+#include "j1Scene.h"
 #include "Brofiler/Brofiler.h"
 
 #define VSYNC true
@@ -46,8 +48,8 @@ bool j1Render::Awake(pugi::xml_node& config)
 	{
 		camera.w = App->win->screen_surface->w;
 		camera.h = App->win->screen_surface->h;
-		camera.x = 50;
-		camera.y = 450;
+		camera.x = 0;
+		camera.y = 0;
 	}
 
 	return ret;
@@ -269,7 +271,21 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 
 void j1Render::ResetCamera()
 {
-	camera.x = App->map->data.cameraStartingPoint.x;
-	camera.y = App->map->data.cameraStartingPoint.y;
+	/*camera.x = App->map->data.cameraStartingPoint.x;
+	camera.y = App->map->data.cameraStartingPoint.y;*/
+	/*App->render->camera.x = 0;
+	App->render->camera.y = -100;*/
+
+	if (App->scene->currentLevel == 1)
+	{
+		App->render->camera.x = App->player->player1->camera1.x;
+		App->render->camera.y = App->player->player1->camera1.y;
+	}
+	else if (App->scene->currentLevel == 2)
+	{
+		App->render->camera.x = App->player->player1->camera2.x;
+		App->render->camera.y = App->player->player1->camera2.y;
+	}
+
 	cameraRestart = false;
 }

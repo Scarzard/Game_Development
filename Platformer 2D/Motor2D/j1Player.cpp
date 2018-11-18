@@ -33,6 +33,12 @@ bool j1Player::Awake(pugi::xml_node &config)
 	player1->position.x = config.child("position").attribute("x").as_int();
 	player1->position.y = config.child("position").attribute("y").as_int();
 
+	player1->camera1.x = config.child("cameraStartPos1").attribute("x").as_int();
+	player1->camera1.y = config.child("cameraStartPos1").attribute("y").as_int();
+
+	player1->camera2.x = config.child("cameraStartPos2").attribute("x").as_int();
+	player1->camera2.y = config.child("cameraStartPos2").attribute("y").as_int();
+
 	player1->playerSpeed = config.child("playerSpeed").attribute("value").as_int();
 	player1->jumpStrength = config.child("jumpStrength").attribute("value").as_int();
 
@@ -46,6 +52,12 @@ bool j1Player::Start()
 	
 	player1->playerTexture = App->tex->Load("textures/main_character.png");
 	player1->godmodeTexture = App->tex->Load("textures/main_character_godmode.png");
+
+	
+	App->render->camera.x = player1->camera1.x;
+	App->render->camera.y = player1->camera1.y;
+	
+
 
 	pugi::xml_parse_result result = storedAnims.load_file("textures/animations.tmx");
 	if (result == NULL)
@@ -96,8 +108,8 @@ bool j1Player::Update(float dt)
 		if (player1->godmode)
 			player1->jumpsLeft = 2;
 
-		CenterCameraOnPlayer();
-		if (App->render->camera.x > 4000)App->render->camera.x = 4000;
+		
+		if (App->render->camera.x > 4500)App->render->camera.x = 4000;
 		if (App->render->camera.x < 0)App->render->camera.x = 0;
 
 		//Check Horizontal Movement
@@ -156,7 +168,7 @@ bool j1Player::Update(float dt)
 			else if (player1->godmode)
 				App->render->Blit(player1->godmodeTexture, player1->position.x, player1->position.y, &player1->currentAnimation->GetCurrentFrame(), SDL_FLIP_HORIZONTAL);
 		}
-			
+		CenterCameraOnPlayer();
 	}
 
 	else if (!player1->alive)
@@ -322,6 +334,7 @@ void j1Player::Respawn()
 	player1->position.y = App->map->data.startingPointY;
 
 	App->render->cameraRestart = true;
+	
 	
 	ResetParallax();
 
@@ -637,6 +650,7 @@ bool j1Player::CenterCameraOnPlayer()
 {
 		uint w, h;
 		App->win->GetWindowSize(w, h); 
+		
 
 		if (player1->position.x > App->render->camera.x + w) 
 		{ 

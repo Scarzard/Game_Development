@@ -36,6 +36,7 @@ struct Player
 	Collider*		playerNextFrameCol	= nullptr;
 
 	iPoint colliderOffset = { 9,6 };
+	iPoint camera1, camera2;
 
 	SDL_Texture*	playerTexture		= nullptr;
 	SDL_Texture*	godmodeTexture		= nullptr;

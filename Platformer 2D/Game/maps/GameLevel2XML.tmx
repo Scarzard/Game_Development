@@ -32565,6 +32565,6 @@
    <property name="Name" value="metadata"/>
   </properties>
   <object id="80" type="cameraStartingPoint" x="114" y="632"/>
-  <object id="90" type="startingPos" x="203" y="628"/>
+  <object id="90" type="startingPos" x="220" y="625"/>
  </objectgroup>
 </map>

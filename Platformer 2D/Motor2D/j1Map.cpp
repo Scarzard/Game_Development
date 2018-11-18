@@ -625,10 +625,10 @@ bool j1Map::LoadMetadata(pugi::xml_node & node)
 			data.startingPointY = dataObj.attribute("y").as_int();
 		}
 
-		if (comparer == "cameraStartingPoint")
+		/*if (comparer == "cameraStartingPoint")
 		{
 			data.cameraStartingPoint.create(dataObj.attribute("x").as_int(), dataObj.attribute("y").as_int());
-		}
+		}*/
 	}
 	return ret;
 }
