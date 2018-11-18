@@ -1,6 +1,6 @@
 # Warped by GroundZero
 
-## GAME INFO
+## Game Info
 
 Warped is a platformer game developed by two students at Universitat Politècnica de Catalunya for the Game Development subject. As of collisions with the environment, the player can walk left or right, jump, and if it falls on a pit, it's sent to the start of the level. The game reads the map and most of the gameplay values from .xml files, and .tmx files generated via Tiled.
 
@@ -10,7 +10,7 @@ The sprites used for the main character are taken from the 2007 game "Mega Man Z
 by Inti Creates and published by Capcom. We do not own the rights for these sprites, nor we 		
 claim to have made them. All rights belong to Capcom.
 
-##	INNOVATION
+##	Innovation
 
  - Assignment 1: For innovation (doing something that the assignment didn't require), we developed a system that can read all the animations of the player from a .tmx file, so that 		
 animations can later be easily edited from Tiled. The number of animations the player has, and their names, still has to be specified in the code, 
@@ -23,7 +23,7 @@ depending on the value given in the TMX file. Pathfinding debug mode.
 
 - A and D: 	Move the character left or right.
 
-- J:		Jump. By inputting again in midair, the player can double-jump once before touching ground again.
+- J:		Jump. By inputting again in midair, the player can double-jump before touching ground again.
 
 ### Debug Features
 
@@ -37,12 +37,12 @@ depending on the value given in the TMX file. Pathfinding debug mode.
 - F11:		Enable/disable FPS cap (Capped at 30FPS)
 - While in GodMode, you can click on the map twice. If the tiles are walkable, it will create a path from the first click (origin) to its destination, second click.
 
-## GITHUB
+## Github
 
 As stated on the license, anyone can look at or modify the code of this project. 
 It can be found here: https://github.com/Scarzard/Game_Development
 
-## AUTHORS
+## Authors
    
 Joel Cabaco Pérez
    - [Joel's GitHub Link](https://github.com/dynamiczero99)
@@ -50,7 +50,7 @@ Joel Cabaco Pérez
 Victor Chen Chen
    - [Victor's GitHub Link](https://github.com/Scarzard)
    
-## TASKLIST:
+## Tasklist:
 	
 - Victor Chen: 
 	- Timer and PerfTimer modules added.
@@ -60,6 +60,9 @@ Victor Chen Chen
 	- Brofiler added for basic profiling features.
 	- Title with relevant information 
 	- Framerate cap to 30FPS added.
+	
+- Joel Cabaco: 
+	- UML file creation.
 
 
 
